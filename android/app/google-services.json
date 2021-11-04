@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "357541026941",
+    "project_id": "knu-map1-20212-team01",
+    "storage_bucket": "knu-map1-20212-team01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357541026941:android:0e5ac78fb652a9ce00e514",
+        "android_client_info": {
+          "package_name": "com.jongsip.streetstall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "357541026941-a95duk9he8taklrkl2u6ufj80d2ra88e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jongsip.streetstall",
+            "certificate_hash": "bac2fc838f6d5a7a9122df40b8eb6ac9511a03de"
+          }
+        },
+        {
+          "client_id": "357541026941-qluhlp3g97e8346of03oih6885o4ce42.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUuTQRXm1dmbA1fIdZ_fL0UdGpjrwLHqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "357541026941-qluhlp3g97e8346of03oih6885o4ce42.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
