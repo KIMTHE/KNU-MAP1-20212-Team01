@@ -3,7 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".activity.CustomerMainActivity">
+
+    <FrameLayout
+        android:id="@+id/fragment_frame"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_navi_customer" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navi_customer"
@@ -15,11 +23,5 @@
         android:background="#fff"
         app:menu="@menu/customer_menu" />
 
-    <FrameLayout
-        android:id="@+id/main_frame_customer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
 </RelativeLayout>
 
-<!--코드 출처 : https://blue-ilike.tistory.com/entry/Android-Studio-%EB%B0%94%ED%85%80-%EB%84%A4%EB%B9%84%EA%B2%8C%EC%9D%B4%EC%85%98-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-Bottom-Navigation-->

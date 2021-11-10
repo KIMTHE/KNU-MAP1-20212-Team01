@@ -1,4 +1,4 @@
 package com.jongsip.streetstall.activity
 
-class SellerHomeActivity {
+class CustomerMainActivity {
 }
