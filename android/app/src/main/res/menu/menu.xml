@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/menu_home"
-        android:enabled="true"
-        android:icon="@drawable/ic_genie"
-        android:title="@string/home"/>
-    <item
-        android:id="@+id/menu_serch"
-        android:enabled="true"
-        android:icon="@drawable/ic_search"
-        android:title="@string/search"/>
 
     <item
-        android:id="@+id/menu_cart"
+        android:id="@+id/frag_home"
         android:enabled="true"
-        android:icon="@drawable/ic_cart_bottom"
-        android:title="@string/cart"/>
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="홈"/>
+
     <item
-        android:id="@+id/menu_acount"
+        android:id="@+id/frag_map"
         android:enabled="true"
-        android:icon="@drawable/ic_user"
-        android:title="@string/account"/>
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="지도"/>
+
+    <item
+        android:id="@+id/frag_bookmark"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_star_24"
+        android:title="즐겨찾기"/>
+
+    <item
+        android:id="@+id/frag_setting"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="설정"/>
+
 </menu>
