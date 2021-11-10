@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="10">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8">
+        android:layout_weight="5">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="fill_vertical"
-            android:src="@drawable/ic_launcher_background"/>
+            android:src="@drawable/ic_baseline_shop_24"/>
 
     </LinearLayout>
 
@@ -23,14 +24,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="10"
+        android:layout_weight="5"
+        android:weightSum="10"
         android:gravity="center_vertical">
+
         <EditText
             android:id="@+id/LoginID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="아이디"
             android:textAlignment="center"/>
+
         <EditText
             android:id="@+id/LoginPW"
             android:layout_width="match_parent"
@@ -38,25 +42,34 @@
             android:hint="비밀번호"
             android:textAlignment="center"
             android:inputType="textPassword"/>
-        <Button
-            android:id="@+id/Login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="로그인"
-            android:layout_gravity="center"
-            android:textAlignment="center"/>
 
-        <Button
-            android:id="@+id/Assign"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="회원가입"
-            android:layout_gravity="center"
-            android:textAlignment="center"/>
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/Login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로그인"
+                android:layout_gravity="center"
+                android:textAlignment="center"/>
+
+            <Button
+                android:id="@+id/Assign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="회원가입"
+                android:textAlignment="center" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/GoogleLogin"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="구글로 로그인"
             android:layout_gravity="center"
