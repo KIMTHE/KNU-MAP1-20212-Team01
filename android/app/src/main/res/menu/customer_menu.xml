@@ -2,25 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/frag_home"
+        android:id="@+id/menu_map"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/map_text"/>
 
     <item
-        android:id="@+id/frag_map"
+        android:id="@+id/menu_search"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_map_24"
         android:title="@string/search_text"/>
 
     <item
-        android:id="@+id/frag_bookmark"
+        android:id="@+id/menu_bookmark"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_star_24"
         android:title="@string/bookmark_text"/>
 
     <item
-        android:id="@+id/frag_setting"
+        android:id="@+id/menu_setting"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/setting_text"/>

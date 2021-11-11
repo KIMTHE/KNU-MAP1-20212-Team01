@@ -7,11 +7,10 @@
     tools:context=".activity.CustomerMainActivity">
 
     <FrameLayout
-        android:id="@+id/fragment_frame"
-
+        android:id="@+id/fragment_frame_customer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navi_customer" />
+        android:layout_above="@id/bottom_navi_customer" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navi_customer"
