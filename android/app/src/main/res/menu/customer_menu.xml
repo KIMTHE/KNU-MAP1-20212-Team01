@@ -23,6 +23,6 @@
         android:id="@+id/frag_setting"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="@string/search_text"/>
+        android:title="@string/setting_text"/>
 
 </menu>
