@@ -2,6 +2,7 @@ package com.jongsip.streetstall.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -9,9 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import com.jongsip.streetstall.MainActivity
 import com.jongsip.streetstall.R
+import com.jongsip.streetstall.activity.CustomerMainActivity
+import com.jongsip.streetstall.activity.SellerMainActivity
 
 class LoginActivity : AppCompatActivity() {
     lateinit var btnLogin: Button
@@ -21,10 +24,12 @@ class LoginActivity : AppCompatActivity() {
     lateinit var editLoginPW: EditText
 
     lateinit var auth : FirebaseAuth
+    lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
+        firestore = FirebaseFirestore.getInstance()
         setContentView(R.layout.activity_login)
 
         btnLogin = findViewById(R.id.btn_login)
@@ -73,11 +78,22 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    // 유저정보 넘겨주고 메인 액티비티 호출
+    // 유저정보를 받아서, 판매자인지 고객인지 판단 후 해당되는 메인 액티비티 호출
     private fun moveMainPage(user: FirebaseUser?){
         if( user!= null){
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+            val uid = user.uid
+            val docRef = firestore.collection("user").document(uid)
+
+            docRef.get().addOnSuccessListener {
+                if (it != null) {
+                    if(it.data!!["userType"] == 1) startActivity(Intent(this, CustomerMainActivity::class.java))
+                    else startActivity(Intent(this, SellerMainActivity::class.java))
+
+                    finish()
+                } else {
+                    Toast.makeText(this,"해당 유저정보가 없습니다.",Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }

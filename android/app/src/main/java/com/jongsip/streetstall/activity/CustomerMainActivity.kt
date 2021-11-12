@@ -22,12 +22,13 @@ class CustomerMainActivity : AppCompatActivity() {
 
         bottomNavigation = findViewById(R.id.bottom_navi_customer)
 
-        supportFragmentManager.beginTransaction().add(R.id.fragment_frame_customer, MapsFragment()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.fragment_frame_customer, MapsFragment())
+            .commit()
 
         bottomNavigation.setOnNavigationItemSelectedListener {
             replaceFragment(
-                when(it.itemId){
-                    R.id.menu_map-> MapsFragment()
+                when (it.itemId) {
+                    R.id.menu_map -> MapsFragment()
                     R.id.menu_search -> SearchFragment()
                     R.id.menu_bookmark -> BookmarkFragment()
                     else -> SettingFragment()
@@ -38,7 +39,8 @@ class CustomerMainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragmentClass: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_frame_customer, (fragmentClass))
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_frame_customer, (fragmentClass))
             .addToBackStack("adds").commit()
     }
 }

@@ -26,7 +26,7 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
         firestore = FirebaseFirestore.getInstance()
-        setContentView(com.jongsip.streetstall.R.layout.activity_signup)
+        setContentView(R.layout.activity_signup)
 
         signupOkButton = findViewById(R.id.signup_okButton)
         editEmail = findViewById(R.id.edit_email)
