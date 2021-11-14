@@ -1,20 +1,24 @@
 package com.jongsip.streetstall.activity
 
-import android.content.Intent
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jongsip.streetstall.R
 import com.jongsip.streetstall.fragment.*
-import com.jongsip.streetstall.login.LoginActivity
 
 class CustomerMainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigation: BottomNavigationView
+
+    companion object {
+        const val PERMISSION_CODE_ACCEPTED = 1
+        const val PERMISSION_CODE_NOT_AVAILABLE = 0
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +28,8 @@ class CustomerMainActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction().add(R.id.fragment_frame_customer, MapsFragment())
             .commit()
+
+        requestLocationPermission()//위치 권한 요청
 
         bottomNavigation.setOnNavigationItemSelectedListener {
             replaceFragment(
@@ -42,5 +48,25 @@ class CustomerMainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_frame_customer, (fragmentClass))
             .addToBackStack("adds").commit()
+    }
+
+    fun requestLocationPermission(): Int {//권한요청
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+            } else {
+                // request permission
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                    CustomerMainActivity.PERMISSION_CODE_ACCEPTED)
+            }
+        } else {
+            // already granted
+            return CustomerMainActivity.PERMISSION_CODE_ACCEPTED
+        }
+        // not available
+        return CustomerMainActivity.PERMISSION_CODE_NOT_AVAILABLE
     }
 }
