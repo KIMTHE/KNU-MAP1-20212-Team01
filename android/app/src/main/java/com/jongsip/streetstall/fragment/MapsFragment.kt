@@ -27,6 +27,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     var mLocationListener: LocationListener? = null
     private lateinit var mView: MapView
     lateinit var gMap: GoogleMap
+    lateinit var nowLocation: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,8 +62,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         //위치 공급자가 사용 불가능해질 때 호출
         override fun onProviderDisabled(provider: String?) {}*/
         //현재 위치 버튼
-        val nowLocation: FloatingActionButton =
-            rootView.findViewById(com.jongsip.streetstall.R.id.nowlocation)
+        nowLocation = rootView.findViewById(com.jongsip.streetstall.R.id.nowlocation)
         nowLocation.setOnClickListener {
             if (ContextCompat.checkSelfPermission(//퍼미션 관련
                     mContext,
@@ -114,17 +114,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val myLocation = LatLng(37.654601, 127.060530)
         gMap = googleMap
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation))
-        googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
-        //마커 출력
-        val marker = MarkerOptions()
-            .position(myLocation)
-            .title("Nowon")
-            .snippet("노원역입니다.")
-        googleMap.addMarker(marker)
-
+        nowLocation.performClick()
     }
 
 }
