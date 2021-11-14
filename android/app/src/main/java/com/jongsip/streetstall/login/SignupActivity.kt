@@ -10,6 +10,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.jongsip.streetstall.R
+import com.jongsip.streetstall.model.BookMark
 import com.jongsip.streetstall.model.Stall
 import com.jongsip.streetstall.model.User
 
@@ -36,7 +37,11 @@ class SignupActivity : AppCompatActivity() {
 
         // 계정 생성 버튼
         signupOkButton.setOnClickListener {
-            createAccount(editUserType.text.toString().toInt(),editEmail.text.toString(), editPassword.text.toString())
+            createAccount(
+                editUserType.text.toString().toInt(),
+                editEmail.text.toString(),
+                editPassword.text.toString()
+            )
         }
     }
 
@@ -47,28 +52,28 @@ class SignupActivity : AppCompatActivity() {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-
                         val uid = task.result.user?.uid
                         val userModel = User(userType, null)
 
                         // database 에 저장
                         firestore.collection("user").document(uid!!).set(userModel)
 
-                        if(userType == 2) //노점주 일시, stall 생성
-                            firestore.collection("stall").document(uid).set(Stall("",""))
+                        if (userType == 1) //고객 일 시, bookmark 생성
+                            firestore.collection("bookmark").document(uid).set(BookMark())
+                        else if (userType == 2) //노점주 일 시, stall 생성
+                            firestore.collection("stall").document(uid).set(Stall("", ""))
 
-                        Toast.makeText(
-                            this, "계정 생성 완료.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toastShow("계정 생성 완료")
                         finish() // 가입창 종료
                     } else {
-                        Toast.makeText(
-                            this, "계정 생성 실패",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toastShow("계정 생성 실패")
                     }
                 }
         }
     }
+
+    //토스트 메시지
+    private fun toastShow(message: String) =
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
 }

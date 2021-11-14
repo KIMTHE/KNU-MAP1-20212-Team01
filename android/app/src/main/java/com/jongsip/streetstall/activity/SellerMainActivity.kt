@@ -21,11 +21,6 @@ class SellerMainActivity : AppCompatActivity() {
     private lateinit var bottomNavigation: BottomNavigationView
     lateinit var uid: String
 
-    companion object {
-        const val PERMISSION_CODE_ACCEPTED = 1
-        const val PERMISSION_CODE_NOT_AVAILABLE = 0
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_seller)

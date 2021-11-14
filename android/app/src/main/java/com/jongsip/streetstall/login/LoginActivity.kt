@@ -66,16 +66,10 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(
-                            baseContext, "로그인에 성공 하였습니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toastShow("로그인에 성공 하였습니다.")
                         moveMainPage(auth.currentUser)
                     } else {
-                        Toast.makeText(
-                            baseContext, "로그인에 실패 하였습니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toastShow("로그인에 실패 하였습니다.")
                     }
                 }
         }
@@ -99,9 +93,13 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(intentMain)
                     finish()
                 } else {
-                    Toast.makeText(this, "해당 유저정보가 없습니다.", Toast.LENGTH_SHORT).show()
+                    toastShow("해당 유저정보가 없습니다.")
                 }
             }
         }
     }
+
+    //토스트 메시지
+    private fun toastShow(message: String) =
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
