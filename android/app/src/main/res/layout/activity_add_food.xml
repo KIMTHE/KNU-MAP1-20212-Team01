@@ -19,24 +19,23 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:hint="메뉴이름" />
+            android:hint="메뉴이름을 입력해주세요." />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="15dp"
-            android:hint="음식 사진을 넣어주세요"/>
+            android:hint="음식 사진을 넣어주세요."/>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/img_food"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/square_background_border_black"
-            />
+            android:background="@drawable/square_background_border_black" />
 
         <EditText
             android:id="@+id/edit_food_info"
@@ -46,7 +45,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:hint="추가정보입력" />
+            android:hint="추가정보를 입력해주세요." />
 
         <EditText
             android:id="@+id/edit_food_price"
@@ -56,7 +55,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:hint="가격정보" />
+            android:hint="가격을 입력해주세요." />
     </LinearLayout>
 
     <LinearLayout
@@ -67,7 +66,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/add_menu"
+            android:id="@+id/btn_add_food"
             android:layout_margin="20dp"
             android:text="추가하기"/>
     </LinearLayout>
