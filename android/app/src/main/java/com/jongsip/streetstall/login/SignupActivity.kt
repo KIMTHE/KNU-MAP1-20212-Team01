@@ -48,10 +48,10 @@ class SignupActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
 
                         val uid = task.result.user?.uid
-                        val userModel = User(userType, uid!!, null)
+                        val userModel = User(userType, null)
 
                         // database 에 저장
-                        firestore.collection("user").document(uid).set(userModel)
+                        firestore.collection("user").document(uid!!).set(userModel)
 
                         Toast.makeText(
                             this, "계정 생성 완료.",
