@@ -25,44 +25,43 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_weight="5"
-        android:weightSum="10"
         android:gravity="center_vertical">
 
         <EditText
             android:id="@+id/edit_login_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="아이디"
+            android:hint="@string/id_text"
             android:textAlignment="center"/>
 
         <EditText
             android:id="@+id/edit_login_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="비밀번호"
+            android:hint="@string/password_text"
             android:textAlignment="center"
             android:inputType="textPassword"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="로그인"
-                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="@string/signIn_text"
                 android:textAlignment="center"/>
 
             <Button
                 android:id="@+id/btn_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="회원가입"
+                android:layout_margin="10dp"
+                android:text="@string/signUp_text"
                 android:textAlignment="center" />
 
         </LinearLayout>
@@ -76,6 +75,5 @@
             android:textAlignment="center"/>
 
     </LinearLayout>
-
 
 </LinearLayout>

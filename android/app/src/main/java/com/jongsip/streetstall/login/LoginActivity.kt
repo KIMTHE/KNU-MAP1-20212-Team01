@@ -7,6 +7,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -47,13 +50,14 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             signIn(editLoginID.text.toString(),editLoginPW.text.toString())
         }
+
     }
 
-    // 로그아웃하지 않을 시 자동 로그인 , 회원가입시 바로 로그인 됨
-    public override fun onStart() {
-        super.onStart()
-        moveMainPage(auth.currentUser)
-    }
+//    // 로그아웃하지 않을 시 자동 로그인 , 회원가입시 바로 로그인 됨
+//    public override fun onStart() {
+//        super.onStart()
+//        moveMainPage(auth.currentUser)
+//    }
 
     // 로그인
     private fun signIn(email: String, password: String) {
@@ -86,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
 
             docRef.get().addOnSuccessListener {
                 if (it != null) {
-                    if(it.data!!["userType"] == 1) startActivity(Intent(this, CustomerMainActivity::class.java))
+                    if(it.data!!["userType"] == 1.toLong()) startActivity(Intent(this, CustomerMainActivity::class.java))
                     else startActivity(Intent(this, SellerMainActivity::class.java))
 
                     finish()

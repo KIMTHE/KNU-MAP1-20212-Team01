@@ -10,6 +10,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.jongsip.streetstall.R
+import com.jongsip.streetstall.model.Stall
 import com.jongsip.streetstall.model.User
 
 
@@ -52,6 +53,9 @@ class SignupActivity : AppCompatActivity() {
 
                         // database 에 저장
                         firestore.collection("user").document(uid!!).set(userModel)
+
+                        if(userType == 2) //노점주 일시, stall 생성
+                            firestore.collection("stall").document(uid).set(Stall("",""))
 
                         Toast.makeText(
                             this, "계정 생성 완료.",
