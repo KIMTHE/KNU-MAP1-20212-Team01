@@ -2,17 +2,24 @@ package com.jongsip.streetstall.activity
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseUser
 import com.jongsip.streetstall.R
 import com.jongsip.streetstall.fragment.*
+import com.jongsip.streetstall.util.PermissionUtil
+import kotlin.system.exitProcess
 
 class SellerMainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigation: BottomNavigationView
+    lateinit var uid: String
 
     companion object {
         const val PERMISSION_CODE_ACCEPTED = 1
@@ -23,49 +30,60 @@ class SellerMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_seller)
 
+        uid = intent.getStringExtra("uid")!!
         bottomNavigation = findViewById(R.id.bottom_navi_seller)
 
         supportFragmentManager.beginTransaction().add(R.id.fragment_frame_seller, MapsFragment())
             .commit()
 
-        requestLocationPermission()//위치 권한 요청
+        PermissionUtil.requestLocationPermission(this)//위치 권한 요청
 
+        replaceFragment(MapsFragment(),"map")
         bottomNavigation.setOnNavigationItemSelectedListener {
-            replaceFragment(
-                when (it.itemId) {
-                    R.id.menu_map -> MapsFragment()
-                    R.id.menu_search -> SearchFragment()
-                    R.id.menu_manage -> ManageFragment()
-                    else -> SettingFragment()
-                }
-            )
+            when (it.itemId) {
+                R.id.menu_map -> replaceFragment(MapsFragment(),"map")
+                R.id.menu_search -> replaceFragment(SearchFragment(),"search")
+                R.id.menu_manage -> replaceFragment(ManageFragment(),"manage")
+                else -> replaceFragment(SettingFragment(),"setting")
+            }
             true
         }
     }
 
-    private fun replaceFragment(fragmentClass: Fragment) {
+    private fun replaceFragment(fragmentClass: Fragment, tag: String) {
+        val bundle = Bundle()
+        bundle.putString("uid", uid)
+        fragmentClass.arguments = bundle //유저 정보를 넘겨줌
+
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_frame_seller, (fragmentClass))
-            .addToBackStack("adds").commit()
+            .replace(R.id.fragment_frame_seller, (fragmentClass),tag)
+            .addToBackStack(tag).commit()
     }
 
-    fun requestLocationPermission(): Int {//권한요청
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-            } else {
-                // request permission
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                    SellerMainActivity.PERMISSION_CODE_ACCEPTED)
-            }
-        } else {
-            // already granted
-            return SellerMainActivity.PERMISSION_CODE_ACCEPTED
+    //뒤로가기버튼을 누를때 콜백
+    override fun onBackPressed() {
+        super.onBackPressed()
+        updateBottomMenu()
+    }
+
+    //태그를 통해 현재 프래그먼트를 찾아서, 메뉴활성화
+    private fun updateBottomMenu() {
+        val tag1: Fragment? = supportFragmentManager.findFragmentByTag("map")
+        val tag2: Fragment? = supportFragmentManager.findFragmentByTag("search")
+        val tag3: Fragment? = supportFragmentManager.findFragmentByTag("manage")
+        val tag4: Fragment? = supportFragmentManager.findFragmentByTag("setting")
+
+        if (tag1 != null && tag1.isVisible) {
+            bottomNavigation.menu.findItem(R.id.menu_map).isChecked = true
         }
-        // not available
-        return SellerMainActivity.PERMISSION_CODE_NOT_AVAILABLE
+        if (tag2 != null && tag2.isVisible) {
+            bottomNavigation.menu.findItem(R.id.menu_search).isChecked = true
+        }
+        if (tag3 != null && tag3.isVisible) {
+            bottomNavigation.menu.findItem(R.id.menu_manage).isChecked = true
+        }
+        if (tag4 != null && tag4.isVisible) {
+            bottomNavigation.menu.findItem(R.id.menu_setting).isChecked = true
+        }
     }
 }

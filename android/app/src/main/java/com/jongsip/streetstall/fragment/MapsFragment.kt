@@ -20,14 +20,24 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
-    var mLocationManager: LocationManager? = null
-    var mLocationListener: LocationListener? = null
+    lateinit var mLocationManager: LocationManager
+    lateinit var mLocationListener: LocationListener
+
     private lateinit var mView: MapView
     lateinit var gMap: GoogleMap
-    lateinit var nowLocation: FloatingActionButton
+    lateinit var btnMoveHere: FloatingActionButton
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,8 +72,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         //위치 공급자가 사용 불가능해질 때 호출
         override fun onProviderDisabled(provider: String?) {}*/
         //현재 위치 버튼
-        nowLocation = rootView.findViewById(com.jongsip.streetstall.R.id.nowlocation)
-        nowLocation.setOnClickListener {
+        btnMoveHere = rootView.findViewById(com.jongsip.streetstall.R.id.btn_move_here)
+        btnMoveHere.setOnClickListener {
             if (ContextCompat.checkSelfPermission(//퍼미션 관련
                     mContext,
                     Manifest.permission.ACCESS_COARSE_LOCATION
@@ -72,11 +82,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                mLocationManager!!.requestLocationUpdates(//사용자 위치 업데이트 요청
+                mLocationManager.requestLocationUpdates(//사용자 위치 업데이트 요청
                     LocationManager.GPS_PROVIDER,
                     3000L,
                     30f,
-                    mLocationListener!!
+                    mLocationListener
                 )
             }
         }
@@ -115,7 +125,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         gMap = googleMap
-        nowLocation.performClick()
+        btnMoveHere.performClick()
     }
 
 }
