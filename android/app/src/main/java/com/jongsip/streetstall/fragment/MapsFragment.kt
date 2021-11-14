@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Context.LOCATION_SERVICE
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
@@ -28,44 +27,43 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     var mLocationListener: LocationListener? = null
     private lateinit var mView: MapView
     lateinit var gMap: GoogleMap
+    lateinit var nowLocation: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val rootView = inflater.inflate(com.jongsip.streetstall.R.layout.fragment_maps, container, false)
-        var mContext: Context = container!!.context
+        val rootView =
+            inflater.inflate(com.jongsip.streetstall.R.layout.fragment_maps, container, false)
+        val mContext: Context = container!!.context
         mView = rootView.findViewById(com.jongsip.streetstall.R.id.mapView) as MapView
         mView.onCreate(savedInstanceState)
         mView.getMapAsync(this)
 
         mLocationManager = mContext.getSystemService(LOCATION_SERVICE) as LocationManager
-        mLocationListener = object : LocationListener {
+        mLocationListener = LocationListener { location ->
+
             //최신 위치가 갱신될 때 호출
-            override fun onLocationChanged(location: Location) {
-                var lat = 0.0
-                var lng = 0.0
-                if (location != null) {
-                    lat = location.latitude
-                    lng = location.longitude
-                    Log.d("GmapViewFragment", "Lat: ${lat}, lon: ${lng}")
-                }
-                var currentLocation = LatLng(lat, lng)
-                gMap!!.addMarker(MarkerOptions().position(currentLocation).title("현재위치"))
-                gMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15f))
-            }
-            /*위치 정보 구할 때 필요없음
-            //위치 공급자의 상태가 바뀔 때 호출
-            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
-            //위치 공급자가 사용 가능해질 때 호출
-            override fun onProviderEnabled(provider: String?) {}
-            //위치 공급자가 사용 불가능해질 때 호출
-            override fun onProviderDisabled(provider: String?) {}*/
+            var lat = 0.0
+            var lng = 0.0
+            lat = location.latitude
+            lng = location.longitude
+            Log.d("GmapViewFragment", "Lat: ${lat}, lon: $lng")
+            val currentLocation = LatLng(lat, lng)
+            gMap.addMarker(MarkerOptions().position(currentLocation).title("현재위치"))
+            gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15f))
         }
+        /*위치 정보 구할 때 필요없음
+        //위치 공급자의 상태가 바뀔 때 호출
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+        //위치 공급자가 사용 가능해질 때 호출
+        override fun onProviderEnabled(provider: String?) {}
+        //위치 공급자가 사용 불가능해질 때 호출
+        override fun onProviderDisabled(provider: String?) {}*/
         //현재 위치 버튼
-        var nowlocation : FloatingActionButton = rootView.findViewById(com.jongsip.streetstall.R.id.nowlocation)
-        nowlocation.setOnClickListener {
+        nowLocation = rootView.findViewById(com.jongsip.streetstall.R.id.nowlocation)
+        nowLocation.setOnClickListener {
             if (ContextCompat.checkSelfPermission(//퍼미션 관련
                     mContext,
                     Manifest.permission.ACCESS_COARSE_LOCATION
@@ -89,39 +87,35 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         super.onStart()
         mView.onStart()
     }
+
     override fun onStop() {
         super.onStop()
         mView.onStop()
     }
+
     override fun onResume() {
         super.onResume()
         mView.onResume()
     }
+
     override fun onPause() {
         super.onPause()
         mView.onPause()
     }
+
     override fun onLowMemory() {
         super.onLowMemory()
         mView.onLowMemory()
     }
+
     override fun onDestroy() {
         mView.onDestroy()
         super.onDestroy()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val myLocation = LatLng(37.654601, 127.060530)
-        gMap=googleMap
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation))
-        googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
-        //마커 출력
-        val marker = MarkerOptions()
-            .position(myLocation)
-            .title("Nowon")
-            .snippet("노원역입니다.")
-        googleMap.addMarker(marker)
-
+        gMap = googleMap
+        nowLocation.performClick()
     }
 
 }
