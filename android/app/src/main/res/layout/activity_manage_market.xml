@@ -8,16 +8,23 @@
         android:id="@+id/stall_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
         android:hint="가게이름을 입력해주세요"/>
 
     <EditText
         android:id="@+id/stall_intro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
         android:hint="소개를 입력해주세요"/>
 
     <ListView
         android:id="@+id/menu_list"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
