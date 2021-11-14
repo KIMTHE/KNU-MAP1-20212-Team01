@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var editLoginID: EditText
     lateinit var editLoginPW: EditText
 
-    lateinit var auth : FirebaseAuth
+    lateinit var auth: FirebaseAuth
     lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,12 +43,12 @@ class LoginActivity : AppCompatActivity() {
 
         // 회원가입 창으로
         btnSignup.setOnClickListener {
-            startActivity(Intent(this,SignupActivity::class.java))
+            startActivity(Intent(this, SignupActivity::class.java))
         }
 
         // 로그인 버튼
         btnLogin.setOnClickListener {
-            signIn(editLoginID.text.toString(),editLoginPW.text.toString())
+            signIn(editLoginID.text.toString(), editLoginPW.text.toString())
         }
 
     }
@@ -83,19 +83,23 @@ class LoginActivity : AppCompatActivity() {
 
 
     // 유저정보를 받아서, 판매자인지 고객인지 판단 후 해당되는 메인 액티비티 호출
-    private fun moveMainPage(user: FirebaseUser?){
-        if( user!= null){
+    private fun moveMainPage(user: FirebaseUser?) {
+        if (user != null) {
             val uid = user.uid
             val docRef = firestore.collection("user").document(uid)
 
             docRef.get().addOnSuccessListener {
                 if (it != null) {
-                    if(it.data!!["userType"] == 1.toLong()) startActivity(Intent(this, CustomerMainActivity::class.java))
-                    else startActivity(Intent(this, SellerMainActivity::class.java))
+                    val intentMain = if (it.data!!["userType"] == 1.toLong())
+                        Intent(this, CustomerMainActivity::class.java)
+                    else
+                        Intent(this, SellerMainActivity::class.java)
 
+                    intentMain.putExtra("uid",uid)
+                    startActivity(intentMain)
                     finish()
                 } else {
-                    Toast.makeText(this,"해당 유저정보가 없습니다.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "해당 유저정보가 없습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
