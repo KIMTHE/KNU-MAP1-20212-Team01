@@ -2,6 +2,7 @@ package com.jongsip.streetstall.fragment
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import androidx.fragment.app.Fragment
@@ -11,15 +12,21 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.jongsip.streetstall.R
 import com.jongsip.streetstall.activity.AddFoodActivity
 import com.jongsip.streetstall.adapter.MenuListAdapter
 import com.jongsip.streetstall.model.Food
 import com.jongsip.streetstall.model.Stall
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ManageFragment : Fragment() {
     lateinit var editStallName: EditText
@@ -30,6 +37,8 @@ class ManageFragment : Fragment() {
 
     lateinit var auth: FirebaseAuth
     lateinit var firestore: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageRef: StorageReference
     lateinit var uid: String
     var foodMenu: ArrayList<Food>? = null
 
@@ -37,6 +46,8 @@ class ManageFragment : Fragment() {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
         firestore = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
+        storageRef = storage.reference
         uid = arguments?.getString("uid")!!
     }
 
@@ -55,12 +66,12 @@ class ManageFragment : Fragment() {
 
         val docRef = firestore.collection("stall").document(uid)
         docRef.get().addOnSuccessListener {
-            editStallName.text = it.data!!["name"] as Editable
-            editStallIntro.text = it.data!!["brief"] as Editable
+            editStallName.setText(it.data!!["name"].toString())
+            editStallIntro.setText(it.data!!["brief"].toString())
             foodMenu = it.data!!["foodMenu"] as ArrayList<Food>?
 
             if(foodMenu != null)
-                listMenu.adapter = MenuListAdapter(foodMenu!!)
+                listMenu.adapter = MenuListAdapter(this,foodMenu!!,uid)
         }
 
         btnAddMenu.setOnClickListener {
@@ -75,8 +86,6 @@ class ManageFragment : Fragment() {
             ))
         }
 
-
-
         return rootView
     }
 
@@ -86,13 +95,39 @@ class ManageFragment : Fragment() {
         if(resultCode == Activity.RESULT_OK){
             if(foodMenu == null) foodMenu = ArrayList()
 
+            val foodName = data!!.getStringExtra("name")!!
+            val foodImgUri = Uri.parse(data.getStringExtra("imgUrl"))
+
             foodMenu!!.add(Food(
-                data!!.getStringExtra("name")!!,
-                data.getStringExtra("imgUrl"),
+                foodName,
+                uploadImage(foodImgUri,foodName),
                 data.getIntExtra("price",0),
                 data.getStringExtra("extraInfo")
             ))
+
+            listMenu.adapter = MenuListAdapter(this,foodMenu!!,uid)
         }
+    }
+
+    //Firebase Storage 에 이미지를 업로드 하는 함수.
+    private fun uploadImage(uri: Uri, foodName: String) : String? {
+        //파일 이름 생성
+        val fileName = "${foodName}_${SimpleDateFormat("yyyymmdd_HHmmss").format(Date())}_.jpg"
+        var returnFileName: String? = null
+
+        //파일 업로드, 다운로드, 삭제, 메타데이터 가져오기 또는 업데이트를 하기 위해 참조를 생성.
+        //기본 참조 위치/uid/${fileName}
+        val imagesRef = storageRef.child("${uid}/"+fileName)
+
+        //이미지 파일 업로드
+        imagesRef.putFile(uri).addOnSuccessListener {
+            returnFileName = fileName
+        }
+            .addOnFailureListener {
+            Toast.makeText(activity, "이미지 업로드가 실패하였습니다.", Toast.LENGTH_SHORT).show()
+        }
+
+        return returnFileName
     }
 
 }

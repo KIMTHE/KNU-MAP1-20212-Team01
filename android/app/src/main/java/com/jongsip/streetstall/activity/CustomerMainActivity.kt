@@ -28,8 +28,6 @@ class CustomerMainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(R.id.fragment_frame_customer, MapsFragment())
             .commit()
 
-        PermissionUtil.requestLocationPermission(this)//위치 권한 요청
-
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_map -> replaceFragment(MapsFragment(),"map")
@@ -39,6 +37,8 @@ class CustomerMainActivity : AppCompatActivity() {
             }
             true
         }
+
+        PermissionUtil.requestLocationPermission(this)//위치 권한 요청
     }
 
     private fun replaceFragment(fragmentClass: Fragment, tag: String) {
