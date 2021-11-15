@@ -2,6 +2,7 @@ package com.jongsip.streetstall.activity
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -16,10 +17,12 @@ import com.jongsip.streetstall.fragment.*
 import com.jongsip.streetstall.util.PermissionUtil
 import kotlin.system.exitProcess
 
-class SellerMainActivity : AppCompatActivity() {
+class SellerMainActivity : AppCompatActivity(), MapsFragment.onDataPassListener {
 
     private lateinit var bottomNavigation: BottomNavigationView
     lateinit var uid: String
+    var lat = 0.0
+    var lng = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,11 +51,20 @@ class SellerMainActivity : AppCompatActivity() {
     private fun replaceFragment(fragmentClass: Fragment, tag: String) {
         val bundle = Bundle()
         bundle.putString("uid", uid)
+        bundle.putDouble("latitude", lat)
+        bundle.putDouble("longitude", lng)
         fragmentClass.arguments = bundle //유저 정보를 넘겨줌
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_frame_seller, (fragmentClass),tag)
             .addToBackStack(tag).commit()
+    }
+
+    //MapsFragment에서 위도 경도 정보 받음
+    override fun onDataPass(latitude : Double,longitude : Double) {
+        lat = latitude
+        lng = longitude
+        Log.d("pass", ""+latitude + longitude)
     }
 
     //뒤로가기버튼을 누를때 콜백
