@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SIGN UP"
+                android:text="간식 뭐먹지?"
                 android:textColor="@color/black"
                 android:textSize="21dp"
                 android:textStyle="bold" />
@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="테스트용 레이아웃입니다." />
+                android:text="Sign Up" />
         </LinearLayout>
 
     </LinearLayout>
