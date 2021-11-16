@@ -11,13 +11,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -40,6 +45,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     var lng = 0.0
 
     private lateinit var mView: MapView
+    lateinit var cardView : LinearLayout
     lateinit var gMap: GoogleMap
     lateinit var btnMoveHere: FloatingActionButton
 
@@ -63,12 +69,15 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         // Inflate the layout for this fragment
         val rootView =
-            inflater.inflate(com.jongsip.streetstall.R.layout.fragment_maps, container, false)
+            inflater.inflate(R.layout.fragment_maps, container, false)
         val mContext: Context = container!!.context
         mView = rootView.findViewById(R.id.mapView) as MapView
+        cardView = rootView.findViewById(R.id.card_view) as LinearLayout
         mView.onCreate(savedInstanceState)
         mView.getMapAsync(this)
 
+
+        cardView.visibility = View.GONE
         //지도에 영업중인 가게 마커 찍기
         firestore.collection("working").get().addOnSuccessListener { documents ->
             for (document in documents) {
@@ -78,6 +87,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
                 //가게 이름 받아오기 위해
                 firestore.collection("stall").document(document.id).get().addOnSuccessListener {
+                    val markerOptions = MarkerOptions() //핀
+                    markerOptions.title(it.data?.get("name").toString()) //상호명
+                    markerOptions.snippet(it.data?.get("brief").toString()) //한줄소개
+                    markerOptions.position(currentLocation) //위치(위도, 경도 값)
+
+                    val marker: Marker? = gMap.addMarker(markerOptions)
+
                     gMap.addMarker(
                         MarkerOptions().position(currentLocation)
                             .title(it.data?.get("name").toString())
@@ -98,10 +114,24 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
             //DB 저장을 위해 SellerMainActivity 에 위도 경도 값 전달
             dataPassListener.onDataPass(lat, lng)
+
+            gMap.setOnMarkerClickListener { marker ->
+                cardView.visibility = View.VISIBLE
+                val storeName = rootView.findViewById<TextView>(R.id.store_name)
+                val introStore = rootView.findViewById<TextView>(R.id.introduce_store)
+                var arr = marker.tag.toString().split("/") //마커에 붙인 태그
+                storeName.text = marker.title
+                introStore.text = marker.snippet
+                //                Log.d("parkinfo", "parkname->"+marker.title+"___pakrwhat->")
+                false
+            }
+
+            //맵 클릭 리스너-맵 클릭하면 카드뷰 없어짐
+            gMap.setOnMapClickListener { cardView.visibility = View.GONE }
         }
 
         //현재 위치 버튼
-        btnMoveHere = rootView.findViewById(com.jongsip.streetstall.R.id.btn_move_here)
+        btnMoveHere = rootView.findViewById(R.id.btn_move_here)
         btnMoveHere.setOnClickListener {
             if (ContextCompat.checkSelfPermission(//퍼미션 관련
                     mContext,
@@ -119,6 +149,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 )
             }
         }
+
         return rootView
     }
 
