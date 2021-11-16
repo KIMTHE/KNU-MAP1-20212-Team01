@@ -3,6 +3,7 @@ package com.jongsip.streetstall.activity
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -13,7 +14,7 @@ import com.jongsip.streetstall.R
 import com.jongsip.streetstall.fragment.*
 import com.jongsip.streetstall.util.PermissionUtil
 
-class CustomerMainActivity : AppCompatActivity() {
+class CustomerMainActivity : AppCompatActivity(), MapsFragment.onDataPassListener {
 
     private lateinit var bottomNavigation: BottomNavigationView
     lateinit var uid: String
@@ -49,6 +50,13 @@ class CustomerMainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_frame_customer, (fragmentClass),tag)
             .addToBackStack(tag).commit()
+    }
+
+    //MapsFragment에서 위도 경도 정보 받음
+    override fun onDataPass(latitude : Double,longitude : Double) {
+       // lat = latitude
+       // lng = longitude
+       // Log.d("pass", ""+latitude + longitude)
     }
 
     //뒤로가기버튼을 누를때 콜백
