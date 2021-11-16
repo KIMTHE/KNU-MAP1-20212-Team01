@@ -22,7 +22,6 @@ import com.jongsip.streetstall.model.workingPosition
 class SettingFragment : Fragment() {
 
     lateinit var open_close: ToggleButton
-    lateinit var workingend: Button
     lateinit var auth: FirebaseAuth
     lateinit var uid: String
     lateinit var firestore: FirebaseFirestore

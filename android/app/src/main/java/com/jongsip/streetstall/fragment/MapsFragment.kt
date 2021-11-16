@@ -27,8 +27,12 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.jongsip.streetstall.R
 import com.jongsip.streetstall.activity.SellerMainActivity
+import com.jongsip.streetstall.adapter.MenuListAdapter
+import com.jongsip.streetstall.model.Food
 
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
@@ -41,8 +45,18 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     lateinit var gMap: GoogleMap
     lateinit var btnMoveHere: FloatingActionButton
 
+    lateinit var auth: FirebaseAuth
+    lateinit var firestore: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageRef: StorageReference
+    lateinit var uid: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = Firebase.auth
+        firestore = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
+        storageRef = storage.reference
     }
 
     override fun onCreateView(
@@ -57,6 +71,21 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         mView.onCreate(savedInstanceState)
         mView.getMapAsync(this)
 
+        //지도에 영업중인 가게 마커 찍기
+        val docRef = firestore.collection("working")
+        docRef.get().addOnSuccessListener { documents ->
+            for(document in documents) {
+                lat = document.data?.get("latitude").toString().toDouble()
+                lng = document.data?.get("longitude").toString().toDouble()
+                uid = document.id
+                val currentLocation = LatLng(lat, lng)//위도 경도 값 저장
+                val docRef = firestore.collection("stall").document(uid)//가게 이름 받아오기 위해
+                docRef.get().addOnSuccessListener {
+                    gMap.addMarker(MarkerOptions().position(currentLocation).title("${it.data?.get("name").toString()}"))
+                }
+            }
+        }
+
         mLocationManager = mContext.getSystemService(LOCATION_SERVICE) as LocationManager
         //최신 위치가 갱신될 때 호출
         mLocationListener = LocationListener { location ->
@@ -70,13 +99,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             //DB 저장을 위해 SellerMainActivity에 위도 경도 값 전달
             dataPassListener.onDataPass(lat, lng)
         }
-        /*위치 정보 구할 때 필요없음
-        //위치 공급자의 상태가 바뀔 때 호출
-        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
-        //위치 공급자가 사용 가능해질 때 호출
-        override fun onProviderEnabled(provider: String?) {}
-        //위치 공급자가 사용 불가능해질 때 호출
-        override fun onProviderDisabled(provider: String?) {}*/
+
         //현재 위치 버튼
         btnMoveHere = rootView.findViewById(com.jongsip.streetstall.R.id.btn_move_here)
         btnMoveHere.setOnClickListener {
