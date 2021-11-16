@@ -49,25 +49,6 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener 
         PermissionUtil.requestLocationPermission(this)//위치 권한 요청
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-    }
 
     private fun replaceFragment(fragmentClass: Fragment, tag: String) {
         val bundle = Bundle()

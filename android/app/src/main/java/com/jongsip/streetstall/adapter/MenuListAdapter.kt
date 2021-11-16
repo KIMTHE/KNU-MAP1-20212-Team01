@@ -34,7 +34,7 @@ class MenuListAdapter(val context: ManageFragment, private val data: ArrayList<F
         val item = data[position]
 
         if(item.imgRef != null){
-            val imgUri = storageRef.child("${uid}/"+item.imgRef).downloadUrl.addOnCompleteListener {
+            storageRef.child("${uid}/"+item.imgRef).downloadUrl.addOnCompleteListener {
                 //Glide 라이브러리를 이용하여 이미지뷰에 uri 를 띄움
                 Glide.with(context).load(it.result).into(view.findViewById(R.id.img_menu_food))
             }

@@ -45,7 +45,7 @@ class AddFoodActivity : AppCompatActivity() {
             resultIntent.putExtra("name", editFoodName.text.toString())
             resultIntent.putExtra("imgUrl",imgFoodUri.toString())
             resultIntent.putExtra("price", editFoodPrice.text.toString().toInt())
-            resultIntent.putExtra("extraInfo", editFoodInfo.toString())
+            resultIntent.putExtra("extraInfo", editFoodInfo.text.toString())
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
@@ -69,6 +69,7 @@ class AddFoodActivity : AppCompatActivity() {
             when (requestCode) {
                 REQ_GALLERY -> data?.data?.let {
                     imgFood.setImageURI(it)
+                    imgFoodUri = it
                 }
             }
         }

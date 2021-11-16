@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -42,6 +40,11 @@ class ManageFragment : Fragment() {
     lateinit var uid: String
     var foodMenu: ArrayList<Food>? = null
 
+    companion object {
+        const val ADD_REQUEST_CODE = 101
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
@@ -56,7 +59,7 @@ class ManageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val rootView =  inflater.inflate(R.layout.fragment_manage, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_manage, container, false)
 
         editStallName = rootView.findViewById(R.id.edit_stall_name)
         editStallIntro = rootView.findViewById(R.id.edit_stall_intro)
@@ -68,22 +71,27 @@ class ManageFragment : Fragment() {
         docRef.get().addOnSuccessListener {
             editStallName.setText(it.data!!["name"].toString())
             editStallIntro.setText(it.data!!["brief"].toString())
-            foodMenu = it.data!!["foodMenu"] as ArrayList<Food>?
 
-            if(foodMenu != null)
-                listMenu.adapter = MenuListAdapter(this,foodMenu!!,uid)
+            if (it.data!!["foodMenu"] != null)
+            {
+                foodMenu = convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
+                listMenu.adapter = MenuListAdapter(this, foodMenu!!, uid)
+            }
+
         }
 
         btnAddMenu.setOnClickListener {
-            startActivity(Intent(activity,AddFoodActivity::class.java))
+            startActivityForResult(Intent(activity, AddFoodActivity::class.java), ADD_REQUEST_CODE)
         }
 
         btnManageComplete.setOnClickListener {
-            firestore.collection("stall").document(uid).set(Stall(
-                editStallName.text.toString(),
-                editStallIntro.text.toString(),
-                foodMenu
-            ))
+            firestore.collection("stall").document(uid).set(
+                Stall(
+                    editStallName.text.toString(),
+                    editStallIntro.text.toString(),
+                    foodMenu
+                )
+            )
         }
 
         return rootView
@@ -92,54 +100,60 @@ class ManageFragment : Fragment() {
     //돌아와서 음식 메뉴 추가한 데이터 받아서 추가
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK){
-            if(foodMenu == null) foodMenu = ArrayList()
+        if (requestCode == ADD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (foodMenu == null) foodMenu = ArrayList()
 
             val foodName = data!!.getStringExtra("name")!!
             val foodImgUri = Uri.parse(data.getStringExtra("imgUrl"))
 
-            foodMenu!!.add(Food(
-                foodName,
-                uploadImage(foodImgUri,foodName),
-                data.getIntExtra("price",0),
-                data.getStringExtra("extraInfo")
-            ))
+            foodMenu!!.add(
+                Food(
+                    foodName,
+                    uploadImage(foodImgUri, foodName),
+                    data.getIntExtra("price", 0),
+                    data.getStringExtra("extraInfo")
+                )
+            )
 
-            listMenu.adapter = MenuListAdapter(this,foodMenu!!,uid)
+            listMenu.adapter = MenuListAdapter(this, foodMenu!!, uid)
         }
     }
 
     //Firebase Storage 에 이미지를 업로드 하는 함수.
-    private fun uploadImage(uri: Uri, foodName: String) : String? {
+    private fun uploadImage(uri: Uri, foodName: String): String? {
         //파일 이름 생성
         val fileName = "${foodName}_${SimpleDateFormat("yyyymmdd_HHmmss").format(Date())}_.jpg"
-        var returnFileName: String? = null
 
         //파일 업로드, 다운로드, 삭제, 메타데이터 가져오기 또는 업데이트를 하기 위해 참조를 생성.
         //기본 참조 위치/uid/${fileName}
-        val imagesRef = storageRef.child("${uid}/"+fileName)
+        val imagesRef = storageRef.child("${uid}/").child(fileName)
 
         //이미지 파일 업로드
-        imagesRef.putFile(uri).addOnSuccessListener {
-            returnFileName = fileName
+        imagesRef.putFile(uri)
+
+        return fileName
+    }
+
+    private fun convertToFood(dataFood: ArrayList<HashMap<String, *>>): ArrayList<Food> {
+        val returnMenu = ArrayList<Food>()
+
+        for (item in dataFood) {
+            val tmpLong = item["price"] as Long
+
+            returnMenu.add(
+                Food(
+                    item["name"] as String,
+                    item["imgRef"] as String?,
+                    tmpLong.toInt(),
+                    item["extraInfo"] as String?
+                )
+            )
         }
-            .addOnFailureListener {
-            Toast.makeText(activity, "이미지 업로드가 실패하였습니다.", Toast.LENGTH_SHORT).show()
-        }
 
-        return returnFileName
+
+        return returnMenu
+
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
 }
