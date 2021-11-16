@@ -1,5 +1,6 @@
 package com.jongsip.streetstall.activity
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +18,7 @@ import com.jongsip.streetstall.fragment.*
 import com.jongsip.streetstall.util.PermissionUtil
 import kotlin.system.exitProcess
 
-class SellerMainActivity : AppCompatActivity(), MapsFragment.onDataPassListener {
+class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener {
 
     private lateinit var bottomNavigation: BottomNavigationView
     lateinit var uid: String
@@ -48,6 +49,14 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.onDataPassListener 
         PermissionUtil.requestLocationPermission(this)//위치 권한 요청
     }
 
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
     private fun replaceFragment(fragmentClass: Fragment, tag: String) {
         val bundle = Bundle()
         bundle.putString("uid", uid)
@@ -60,7 +69,7 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.onDataPassListener 
             .addToBackStack(tag).commit()
     }
 
-    //MapsFragment에서 위도 경도 정보 받음
+    //MapsFragment 에서 위도 경도 정보 받음
     override fun onDataPass(latitude : Double,longitude : Double) {
         lat = latitude
         lng = longitude
@@ -92,5 +101,9 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.onDataPassListener 
         if (tag4 != null && tag4.isVisible) {
             bottomNavigation.menu.findItem(R.id.menu_setting).isChecked = true
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

@@ -130,4 +130,16 @@ class ManageFragment : Fragment() {
         return returnFileName
     }
 
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
 }
