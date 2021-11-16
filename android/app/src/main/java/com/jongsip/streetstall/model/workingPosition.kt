@@ -1,6 +1,6 @@
 package com.jongsip.streetstall.model
 
-class workingPosition (
+data class WorkingPosition (
     var latitude: Double,
     var longitude: Double
 )
