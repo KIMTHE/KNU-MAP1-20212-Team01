@@ -27,7 +27,6 @@ class SettingFragment : Fragment() {
     lateinit var uid: String
     lateinit var firestore: FirebaseFirestore
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         uid = arguments?.getString("uid")!!
@@ -50,6 +49,15 @@ class SettingFragment : Fragment() {
         Log.d("lng", ""+lng)
 
         open_close = rootView.findViewById(R.id.open_close)
+        //앱 껐다 켜도 서버에서 데이터 받아와서 데이터있으면 영업종료버튼이 바로 보이게 함
+        val docRef = firestore.collection("working").document(uid)
+        docRef.get().addOnSuccessListener {
+            if(it.data!!["latitude"] != null){
+                if(!open_close.isChecked){
+                    open_close.toggle()
+                }
+            }
+        }
         open_close.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked){//영업시작 버튼 눌렀을 때
                 firestore.collection("working").document(uid).set(workingPosition(lat, lng))
