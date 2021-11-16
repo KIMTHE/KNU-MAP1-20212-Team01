@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import android.widget.ToggleButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -20,7 +21,7 @@ import com.jongsip.streetstall.model.workingPosition
 
 class SettingFragment : Fragment() {
 
-    lateinit var workingstart: Button
+    lateinit var open_close: ToggleButton
     lateinit var workingend: Button
     lateinit var auth: FirebaseAuth
     lateinit var uid: String
@@ -48,19 +49,17 @@ class SettingFragment : Fragment() {
         Log.d("lat", ""+lat)
         Log.d("lng", ""+lng)
 
-        //영업시작 버튼 눌렀을 때
-        workingstart = rootView.findViewById(R.id.workingstart)
-        workingstart.setOnClickListener{
-            firestore.collection("working").document(uid).set(workingPosition(lat, lng))
+        open_close = rootView.findViewById(R.id.open_close)
+        open_close.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){//영업시작 버튼 눌렀을 때
+                firestore.collection("working").document(uid).set(workingPosition(lat, lng))
+            }
+            else{//영업종료 버튼 눌렀을 때
+                firestore.collection("working").document(uid)
+                    .delete()
+                    .addOnSuccessListener { Log.d("delete", "DocumentSnapshot successfully deleted!") }
+                    .addOnFailureListener { e -> Log.w("delete", "Error deleting document", e) }        }
         }
-
-        //영업종료 버튼 눌렀을 때
-        workingend = rootView.findViewById(R.id.workingend)
-        workingend.setOnClickListener{
-            firestore.collection("working").document(uid)
-                .delete()
-                .addOnSuccessListener { Log.d("delete", "DocumentSnapshot successfully deleted!") }
-                .addOnFailureListener { e -> Log.w("delete", "Error deleting document", e) }        }
         return rootView
     }
 
