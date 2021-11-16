@@ -65,21 +65,24 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         val rootView =
             inflater.inflate(com.jongsip.streetstall.R.layout.fragment_maps, container, false)
         val mContext: Context = container!!.context
-        mView = rootView.findViewById(com.jongsip.streetstall.R.id.mapView) as MapView
+        mView = rootView.findViewById(R.id.mapView) as MapView
         mView.onCreate(savedInstanceState)
         mView.getMapAsync(this)
 
         //지도에 영업중인 가게 마커 찍기
-        val docRef = firestore.collection("working")
-        docRef.get().addOnSuccessListener { documents ->
-            for(document in documents) {
-                lat = document.data?.get("latitude").toString().toDouble()
-                lng = document.data?.get("longitude").toString().toDouble()
-                uid = document.id
+        firestore.collection("working").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                lat = document.data["latitude"].toString().toDouble()
+                lng = document.data["longitude"].toString().toDouble()
+                val workingUid = document.id
                 val currentLocation = LatLng(lat, lng)//위도 경도 값 저장
-                val docRef = firestore.collection("stall").document(uid)//가게 이름 받아오기 위해
-                docRef.get().addOnSuccessListener {
-                    gMap.addMarker(MarkerOptions().position(currentLocation).title("${it.data?.get("name").toString()}"))
+
+                //가게 이름 받아오기 위해
+                firestore.collection("stall").document(workingUid).get().addOnSuccessListener {
+                    gMap.addMarker(
+                        MarkerOptions().position(currentLocation)
+                            .title(it.data?.get("name").toString())
+                    )
                 }
             }
         }
@@ -122,10 +125,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     //SellerMainActivity 로 위도 경도 보내기 위한 부분
     interface OnDataPassListener {
-        fun onDataPass(latitude : Double,longitude : Double)
+        fun onDataPass(latitude: Double, longitude: Double)
     }
 
-    lateinit var dataPassListener : OnDataPassListener
+    lateinit var dataPassListener: OnDataPassListener
+
     //SellerMainActivity 로 위도 경도 보내기 위한 부분
     override fun onAttach(context: Context) {
         super.onAttach(context)

@@ -57,6 +57,18 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener 
         super.onResume()
     }
 
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     private fun replaceFragment(fragmentClass: Fragment, tag: String) {
         val bundle = Bundle()
         bundle.putString("uid", uid)
@@ -103,7 +115,5 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener 
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-    }
+
 }

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,22 +22,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_weight="1"
-                android:gravity="center|left"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="간식 뭐먹지?"
+                    android:text="@string/app_name"
                     android:textColor="@color/black"
-                    android:textSize="21dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Sign Up" />
+                    android:text="@string/signUp_text" />
             </LinearLayout>
 
         </LinearLayout>
@@ -78,6 +78,7 @@
                 android:inputType="textPassword" />
 
             <RadioGroup
+                android:id="@+id/rd_group_userType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -85,15 +86,16 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:id="@+id/cutomor_button"
-                    android:text="소비자"/>
+                    android:id="@+id/rd_btn_customer"
+                    android:text="@string/customer_text"
+                    android:checked="true"/>
 
                 <RadioButton
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:id="@+id/seller_button"
-                    android:text="판매자"/>
+                    android:id="@+id/rd_btn_seller"
+                    android:text="@string/seller_text"/>
             </RadioGroup>
 
             <Button
@@ -105,7 +107,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
-                android:text="@string/signUp_text"
+                android:text="@string/signUp_complete_text"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="14sp"
