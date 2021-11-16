@@ -74,11 +74,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             for (document in documents) {
                 lat = document.data["latitude"].toString().toDouble()
                 lng = document.data["longitude"].toString().toDouble()
-                val workingUid = document.id
                 val currentLocation = LatLng(lat, lng)//위도 경도 값 저장
 
                 //가게 이름 받아오기 위해
-                firestore.collection("stall").document(workingUid).get().addOnSuccessListener {
+                firestore.collection("stall").document(document.id).get().addOnSuccessListener {
                     gMap.addMarker(
                         MarkerOptions().position(currentLocation)
                             .title(it.data?.get("name").toString())
@@ -128,7 +127,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         fun onDataPass(latitude: Double, longitude: Double)
     }
 
-    lateinit var dataPassListener: OnDataPassListener
+    private lateinit var dataPassListener: OnDataPassListener
 
     //SellerMainActivity 로 위도 경도 보내기 위한 부분
     override fun onAttach(context: Context) {
