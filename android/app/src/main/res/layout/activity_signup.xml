@@ -77,14 +77,24 @@
                 android:hint="@string/password_text"
                 android:inputType="textPassword" />
 
-            <EditText
-                android:id="@+id/edit_usertype"
+            <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:hint="1: 고객, 2: 점주"
-                android:inputType="text" />
+                android:orientation="horizontal">
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cutomor_button"
+                    android:text="소비자"/>
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/seller_button"
+                    android:text="판매자"/>
+            </RadioGroup>
 
             <Button
                 android:id="@+id/signup_okButton"
