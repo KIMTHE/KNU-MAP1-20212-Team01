@@ -52,7 +52,7 @@ class SettingFragment : Fragment() {
         //앱 껐다 켜도 서버에서 데이터 받아와서 데이터있으면 영업종료버튼이 바로 보이게 함
         val docRef = firestore.collection("working").document(uid)
         docRef.get().addOnSuccessListener {
-            if(it.data!!["latitude"] != null){
+            if(it.data?.get("latitude") != null){
                 if(!open_close.isChecked){
                     open_close.toggle()
                 }
