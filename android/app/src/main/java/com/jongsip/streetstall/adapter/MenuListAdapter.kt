@@ -40,9 +40,11 @@ class MenuListAdapter(val context: ManageFragment, private val data: ArrayList<F
             }
         }
 
-        view.findViewById<TextView>(R.id.text_menu_food_name).text = item.name
+        view.findViewById<TextView>(R.id.text_menu_food_name).text =
+            String.format(context.getString(R.string.item_food_name_text), item.name)
         view.findViewById<TextView>(R.id.text_menu_food_info).text = item.extraInfo
-        view.findViewById<TextView>(R.id.text_menu_food_price).text = item.price.toString()
+        view.findViewById<TextView>(R.id.text_menu_food_price).text =
+            String.format(context.getString(R.string.item_food_price_text),item.price)
 
         return view
     }

@@ -118,7 +118,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             lng = location.longitude
             Log.d("GmapViewFragment", "Lat: ${lat}, lon: $lng")
             val currentLocation = LatLng(lat, lng)
-            gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15f))
+            gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17f))
 
             //DB 저장을 위해 SellerMainActivity 에 위도 경도 값 전달
             dataPassListener.onDataPass(lat, lng)
@@ -130,7 +130,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 var arr = marker.tag.toString().split("/") //마커에 붙인 태그
                 storeName.text = marker.title
                 introStore.text = marker.snippet
-                //                Log.d("parkinfo", "parkname->"+marker.title+"___pakrwhat->")
+                //Log.d("parkinfo", "parkname->"+marker.title+"___pakrwhat->")
                 false
             }
 

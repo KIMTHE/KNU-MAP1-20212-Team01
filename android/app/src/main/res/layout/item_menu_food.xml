@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="160dp"
     android:padding="10dp"
     android:orientation="horizontal">
 
@@ -21,6 +21,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:text="@string/item_food_name_text"
             android:id="@+id/text_menu_food_name"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -36,7 +37,8 @@
             android:id="@+id/text_menu_food_price"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="@string/item_food_price_text"/>
     </LinearLayout>
 </LinearLayout>
 

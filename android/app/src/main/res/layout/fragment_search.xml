@@ -7,14 +7,14 @@
 
 
     <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_view"
+        android:id="@+id/search_view_food"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:iconifiedByDefault="false"
-        app:queryHint="검색할 상호명이나 메뉴명을 입력해주세요"/>
+        app:queryHint="검색할 상품명을 입력해주세요"/>
 
     <ListView
-        android:id="@+id/list_stall"
+        android:id="@+id/list_search_food"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
