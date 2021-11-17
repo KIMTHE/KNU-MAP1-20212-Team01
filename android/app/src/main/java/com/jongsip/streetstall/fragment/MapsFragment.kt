@@ -32,10 +32,17 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.jongsip.streetstall.R
 import com.jongsip.streetstall.activity.SellerMainActivity
 import com.jongsip.streetstall.adapter.MenuListAdapter
 import com.jongsip.streetstall.model.Food
+import android.graphics.Bitmap
+
+import android.R
+
+import android.graphics.drawable.BitmapDrawable
+
+
+
 
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
@@ -69,10 +76,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         // Inflate the layout for this fragment
         val rootView =
-            inflater.inflate(R.layout.fragment_maps, container, false)
+            inflater.inflate(com.jongsip.streetstall.R.layout.fragment_maps, container, false)
         val mContext: Context = container!!.context
-        mView = rootView.findViewById(R.id.mapView) as MapView
-        cardView = rootView.findViewById(R.id.card_view) as LinearLayout
+        mView = rootView.findViewById(com.jongsip.streetstall.R.id.mapView) as MapView
+        cardView = rootView.findViewById(com.jongsip.streetstall.R.id.card_view) as LinearLayout
         mView.onCreate(savedInstanceState)
         mView.getMapAsync(this)
 
@@ -111,7 +118,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             lng = location.longitude
             Log.d("GmapViewFragment", "Lat: ${lat}, lon: $lng")
             val currentLocation = LatLng(lat, lng)
-            gMap.addMarker(MarkerOptions().position(currentLocation).title("현재위치"))
             gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15f))
 
             //DB 저장을 위해 SellerMainActivity 에 위도 경도 값 전달
@@ -119,8 +125,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
             gMap.setOnMarkerClickListener { marker ->
                 cardView.visibility = View.VISIBLE
-                val storeName = rootView.findViewById<TextView>(R.id.store_name)
-                val introStore = rootView.findViewById<TextView>(R.id.introduce_store)
+                val storeName = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.store_name)
+                val introStore = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.introduce_store)
                 var arr = marker.tag.toString().split("/") //마커에 붙인 태그
                 storeName.text = marker.title
                 introStore.text = marker.snippet
@@ -133,7 +139,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
 
         //현재 위치 버튼
-        btnMoveHere = rootView.findViewById(R.id.btn_move_here)
+        btnMoveHere = rootView.findViewById(com.jongsip.streetstall.R.id.btn_move_here)
         btnMoveHere.setOnClickListener {
             if (ContextCompat.checkSelfPermission(//퍼미션 관련
                     mContext,
