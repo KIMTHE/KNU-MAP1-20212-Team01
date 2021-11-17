@@ -81,23 +81,25 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         //지도에 영업중인 가게 마커 찍기
         firestore.collection("working").get().addOnSuccessListener { documents ->
             for (document in documents) {
-                lat = document.data["latitude"].toString().toDouble()
-                lng = document.data["longitude"].toString().toDouble()
-                val currentLocation = LatLng(lat, lng)//위도 경도 값 저장
+                if (document.data["latitude"] != null) {
+                    lat = document.data["latitude"].toString().toDouble()
+                    lng = document.data["longitude"].toString().toDouble()
+                    val currentLocation = LatLng(lat, lng)//위도 경도 값 저장
 
-                //가게 이름 받아오기 위해
-                firestore.collection("stall").document(document.id).get().addOnSuccessListener {
-                    val markerOptions = MarkerOptions() //핀
-                    markerOptions.title(it.data?.get("name").toString()) //상호명
-                    markerOptions.snippet(it.data?.get("brief").toString()) //한줄소개
-                    markerOptions.position(currentLocation) //위치(위도, 경도 값)
+                    //가게 이름 받아오기 위해
+                    firestore.collection("stall").document(document.id).get().addOnSuccessListener {
+                        val markerOptions = MarkerOptions() //핀
+                        markerOptions.title(it.data?.get("name").toString()) //상호명
+                        markerOptions.snippet(it.data?.get("brief").toString()) //한줄소개
+                        markerOptions.position(currentLocation) //위치(위도, 경도 값)
 
-                    val marker: Marker? = gMap.addMarker(markerOptions)
+                        val marker: Marker? = gMap.addMarker(markerOptions)
 
-                    gMap.addMarker(
-                        MarkerOptions().position(currentLocation)
-                            .title(it.data?.get("name").toString())
-                    )
+                        gMap.addMarker(
+                            MarkerOptions().position(currentLocation)
+                                .title(it.data?.get("name").toString())
+                        )
+                    }
                 }
             }
         }
