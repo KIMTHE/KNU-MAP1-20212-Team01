@@ -41,6 +41,7 @@ class SettingFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_setting, container, false)
         var lat = 0.0
         var lng = 0.0
+        var check : Int = 0
 
         //SellerMainActivity 에서 위도 경도 정보 가져옴
         lat = arguments?.getDouble("latitude") ?:0.0
@@ -54,19 +55,28 @@ class SettingFragment : Fragment() {
         docRef.get().addOnSuccessListener {
             if(it.data?.get("latitude") != null){
                 if(!openClose.isChecked){
+                    check = 1
                     openClose.toggle()
+                    check = 0
                 }
             }
         }
         openClose.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked){//영업시작 버튼 눌렀을 때
-                firestore.collection("working").document(uid).set(WorkingPosition(lat, lng))
+            if(check == 0) {
+                if (isChecked) {//영업시작 버튼 눌렀을 때
+                    firestore.collection("working").document(uid).set(WorkingPosition(lat, lng))
+                } else {//영업종료 버튼 눌렀을 때
+                    firestore.collection("working").document(uid)
+                        .delete()
+                        .addOnSuccessListener {
+                            Log.d(
+                                "delete",
+                                "DocumentSnapshot successfully deleted!"
+                            )
+                        }
+                        .addOnFailureListener { e -> Log.w("delete", "Error deleting document", e) }
+                }
             }
-            else{//영업종료 버튼 눌렀을 때
-                firestore.collection("working").document(uid)
-                    .delete()
-                    .addOnSuccessListener { Log.d("delete", "DocumentSnapshot successfully deleted!") }
-                    .addOnFailureListener { e -> Log.w("delete", "Error deleting document", e) }        }
         }
 
         btnLogout = rootView.findViewById(R.id.btn_logout)
