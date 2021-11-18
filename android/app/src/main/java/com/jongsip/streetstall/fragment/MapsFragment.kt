@@ -36,13 +36,10 @@ import com.jongsip.streetstall.activity.SellerMainActivity
 import com.jongsip.streetstall.adapter.MenuListAdapter
 import com.jongsip.streetstall.model.Food
 import android.graphics.Bitmap
-
 import android.R
-
 import android.graphics.drawable.BitmapDrawable
-
-
-
+import com.jongsip.streetstall.util.FirebaseUtil
+import java.util.HashMap
 
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
@@ -92,6 +89,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     lat = document.data["latitude"].toString().toDouble()
                     lng = document.data["longitude"].toString().toDouble()
                     val currentLocation = LatLng(lat, lng)//위도 경도 값 저장
+                    var foodName : String? = null
 
                     //가게 이름 받아오기 위해
                     firestore.collection("stall").document(document.id).get().addOnSuccessListener {
@@ -101,6 +99,24 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                         markerOptions.position(currentLocation) //위치(위도, 경도 값)
 
                         val marker: Marker? = gMap.addMarker(markerOptions)
+
+                        var realMenu : ArrayList<Food>? = null
+                        var foodMenu: ArrayList<HashMap<String, *>>? = null
+                        foodMenu = it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>?
+                        if (foodMenu != null) {
+                            for (item in foodMenu) {
+                                foodName = item["name"] as String
+                            }
+                        }
+                        Log.d("메뉴","${realMenu}")
+
+                        //foodName = realMenu?.get(0)?.name.toString()
+
+
+
+                        if (marker != null) {
+                            marker.tag = foodName
+                        }
 
                         gMap.addMarker(
                             MarkerOptions().position(currentLocation)
@@ -127,9 +143,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 cardView.visibility = View.VISIBLE
                 val storeName = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.store_name)
                 val introStore = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.introduce_store)
+                val storeMenu = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.store_menu)
                 var arr = marker.tag.toString().split("/") //마커에 붙인 태그
                 storeName.text = marker.title
                 introStore.text = marker.snippet
+                storeMenu.text = marker.tag.toString()
                 //Log.d("parkinfo", "parkname->"+marker.title+"___pakrwhat->")
                 false
             }
