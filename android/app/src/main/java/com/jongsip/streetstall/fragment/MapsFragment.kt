@@ -90,6 +90,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     lng = document.data["longitude"].toString().toDouble()
                     val currentLocation = LatLng(lat, lng)//위도 경도 값 저장
                     var foodName : String? = null
+                    var foodPrice : String? = null
 
                     //가게 이름 받아오기 위해
                     firestore.collection("stall").document(document.id).get().addOnSuccessListener {
@@ -100,28 +101,19 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
                         val marker: Marker? = gMap.addMarker(markerOptions)
 
-                        var realMenu : ArrayList<Food>? = null
+                        //상세정보에 메뉴 - 가격 보여주기 위해
                         var foodMenu: ArrayList<HashMap<String, *>>? = null
                         foodMenu = it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>?
                         if (foodMenu != null) {
                             for (item in foodMenu) {
                                 foodName = item["name"] as String
+                                foodPrice = (item["price"] as Long).toString()
+                                break
                             }
                         }
-                        Log.d("메뉴","${realMenu}")
-
-                        //foodName = realMenu?.get(0)?.name.toString()
-
-
-
                         if (marker != null) {
-                            marker.tag = foodName
+                            marker.tag = foodName + "/" + foodPrice
                         }
-
-                        gMap.addMarker(
-                            MarkerOptions().position(currentLocation)
-                                .title(it.data?.get("name").toString())
-                        )
                     }
                 }
             }
@@ -143,11 +135,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 cardView.visibility = View.VISIBLE
                 val storeName = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.store_name)
                 val introStore = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.introduce_store)
-                val storeMenu = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.store_menu)
+                val bestMenu = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.best_menu)
                 var arr = marker.tag.toString().split("/") //마커에 붙인 태그
                 storeName.text = marker.title
                 introStore.text = marker.snippet
-                storeMenu.text = marker.tag.toString()
+                bestMenu.text = arr[0] + "  " + arr[1] + "원"
+
                 //Log.d("parkinfo", "parkname->"+marker.title+"___pakrwhat->")
                 false
             }

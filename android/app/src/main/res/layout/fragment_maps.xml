@@ -107,20 +107,19 @@
                     <TextView
                         android:layout_width="70dp"
                         android:layout_height="20dp"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="25dp"
-                        android:text="대표 메뉴: "
+                        android:text="대표 메뉴 : "
                         android:textColor="#000000"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/store_menu"
+                        android:id="@+id/best_menu"
                         android:layout_marginTop="7dp"
                         android:layout_width="290dp"
                         android:text="갱신 전"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:textColor="#000000"
                         android:layout_height="20dp" />
                 </LinearLayout>
