@@ -1,16 +1,16 @@
 package com.jongsip.streetstall.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jongsip.streetstall.R
 import com.jongsip.streetstall.adapter.SearchListAdapter
-import com.jongsip.streetstall.model.Food
 import com.jongsip.streetstall.model.SearchFood
 import com.jongsip.streetstall.model.WorkingPosition
 import com.jongsip.streetstall.util.FirebaseUtil
@@ -18,7 +18,7 @@ import java.util.HashMap
 
 class SearchFragment : Fragment() {
 
-    lateinit var searchFood: SearchView
+    lateinit var searchViewFood: SearchView
     lateinit var listSearchFood: ListView
 
     lateinit var uid: String
@@ -38,12 +38,12 @@ class SearchFragment : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_search, container, false)
         listSearchFood = rootView.findViewById(R.id.list_search_food)
-        searchFood = rootView.findViewById(R.id.search_view_food)
+        searchViewFood = rootView.findViewById(R.id.search_view_food)
 
-        searchFood.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchViewFood.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // 검색 버튼 누를 때, 검색내용이 있으면 호출
-                listSearchFood.adapter = query?.let { SearchListAdapter(context!!, searchFood(it)) }
+                query?.let { searchFood(query) }
                 return true
             }
 
@@ -56,7 +56,7 @@ class SearchFragment : Fragment() {
         return rootView
     }
 
-    fun searchFood(searchFoodName: String): ArrayList<SearchFood> {
+    fun searchFood(searchFoodName: String) {
         val searchData = ArrayList<SearchFood>()
 
         firestore.collection("working").get().addOnSuccessListener { documents ->
@@ -84,13 +84,13 @@ class SearchFragment : Fragment() {
                     }
                 }
             }
+            listSearchFood.adapter = SearchListAdapter(this@SearchFragment, searchData)
         }
 
-        return searchData
     }
 
 
     companion object {
-
+        const val TAG = "SearchFragment"
     }
 }

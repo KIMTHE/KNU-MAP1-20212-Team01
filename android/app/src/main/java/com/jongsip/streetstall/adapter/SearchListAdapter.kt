@@ -10,9 +10,16 @@ import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.jongsip.streetstall.R
+<<<<<<< .merge_file_a00912
 import com.jongsip.streetstall.model.SearchFood
 
 class SearchListAdapter(val context: Context, private val data: ArrayList<SearchFood>): BaseAdapter() {
+=======
+import com.jongsip.streetstall.fragment.SearchFragment
+import com.jongsip.streetstall.model.SearchFood
+
+class SearchListAdapter(val context: SearchFragment, private val data: ArrayList<SearchFood>): BaseAdapter() {
+>>>>>>> .merge_file_a13164
     private var storage: FirebaseStorage = FirebaseStorage.getInstance()
     private var storageRef: StorageReference = storage.reference
 

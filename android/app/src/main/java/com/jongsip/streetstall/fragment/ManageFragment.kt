@@ -43,8 +43,12 @@ class ManageFragment : Fragment() {
     private lateinit var storage: FirebaseStorage
     private lateinit var storageRef: StorageReference
     lateinit var uid: String
+<<<<<<< HEAD
     lateinit var adapter : MenuListAdapter
     var foodMenu: ArrayList<Food>? = null
+=======
+    var foodMenu: ArrayList<Food> = ArrayList<Food>()
+>>>>>>> 91ca01e349768e1d35868164789472a22357f297
 
     companion object {
         const val ADD_REQUEST_CODE = 101
@@ -73,6 +77,7 @@ class ManageFragment : Fragment() {
         btnAddMenu = rootView.findViewById(R.id.btn_add_menu)
         btnManageComplete = rootView.findViewById(R.id.btn_manage_complete)
 
+<<<<<<< HEAD
         firestore.collection("stall").document(uid).get().addOnSuccessListener {
             editStallName!!.setText(it.data!!["name"].toString())
             editStallIntro!!.setText(it.data!!["brief"].toString())
@@ -81,6 +86,16 @@ class ManageFragment : Fragment() {
                 foodMenu = FirebaseUtil.convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
                 adapter = MenuListAdapter(this, foodMenu!!, uid)
                 listMenu.adapter = adapter
+=======
+        val docRef = firestore.collection("stall").document(uid)
+        docRef.get().addOnSuccessListener {
+            editStallName.setText(it.data!!["name"].toString())
+            editStallIntro.setText(it.data!!["brief"].toString())
+
+            if (it.data!!["foodMenu"] != null) {
+                foodMenu = FirebaseUtil.convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
+                listMenu.adapter = MenuListAdapter(this, foodMenu, uid)
+>>>>>>> 91ca01e349768e1d35868164789472a22357f297
             }
 
         }
@@ -106,11 +121,11 @@ class ManageFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            if (foodMenu == null) foodMenu = ArrayList()
 
             val foodName = data!!.getStringExtra("name")!!
             val foodImgUri = Uri.parse(data.getStringExtra("imgUrl"))
 
+<<<<<<< HEAD
             //동기화를 위해 메뉴 추가 후 firbase에 업로드 할때까지 thread를 blocking
             runBlocking {
                 GlobalScope.async {
@@ -126,6 +141,18 @@ class ManageFragment : Fragment() {
                     adapter.notifyDataSetChanged()
                 }
             }
+=======
+            foodMenu.add(
+                Food(
+                    foodName,
+                    uploadImage(foodImgUri, foodName),
+                    data.getIntExtra("price", 0),
+                    data.getStringExtra("extraInfo")
+                )
+            )
+
+            listMenu.adapter = MenuListAdapter(this, foodMenu, uid)
+>>>>>>> 91ca01e349768e1d35868164789472a22357f297
         }
     }
 
