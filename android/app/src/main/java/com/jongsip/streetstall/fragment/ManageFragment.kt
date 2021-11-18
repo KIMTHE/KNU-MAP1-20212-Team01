@@ -23,6 +23,10 @@ import com.jongsip.streetstall.adapter.MenuListAdapter
 import com.jongsip.streetstall.model.Food
 import com.jongsip.streetstall.model.Stall
 import com.jongsip.streetstall.util.FirebaseUtil
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -39,6 +43,7 @@ class ManageFragment : Fragment() {
     private lateinit var storage: FirebaseStorage
     private lateinit var storageRef: StorageReference
     lateinit var uid: String
+    lateinit var adapter : MenuListAdapter
     var foodMenu: ArrayList<Food>? = null
 
     companion object {
@@ -69,12 +74,13 @@ class ManageFragment : Fragment() {
         btnManageComplete = rootView.findViewById(R.id.btn_manage_complete)
 
         firestore.collection("stall").document(uid).get().addOnSuccessListener {
-            editStallName.setText(it.data!!["name"].toString())
-            editStallIntro.setText(it.data!!["brief"].toString())
+            editStallName!!.setText(it.data!!["name"].toString())
+            editStallIntro!!.setText(it.data!!["brief"].toString())
 
             if (it.data!!["foodMenu"] != null) {
                 foodMenu = FirebaseUtil.convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
-                listMenu.adapter = MenuListAdapter(this, foodMenu!!, uid)
+                adapter = MenuListAdapter(this, foodMenu!!, uid)
+                listMenu.adapter = adapter
             }
 
         }
@@ -105,16 +111,21 @@ class ManageFragment : Fragment() {
             val foodName = data!!.getStringExtra("name")!!
             val foodImgUri = Uri.parse(data.getStringExtra("imgUrl"))
 
-            foodMenu!!.add(
-                Food(
-                    foodName,
-                    uploadImage(foodImgUri, foodName),
-                    data.getIntExtra("price", 0),
-                    data.getStringExtra("extraInfo")
-                )
-            )
-
-            listMenu.adapter = MenuListAdapter(this, foodMenu!!, uid)
+            //동기화를 위해 메뉴 추가 후 firbase에 업로드 할때까지 thread를 blocking
+            runBlocking {
+                GlobalScope.async {
+                    foodMenu!!.add(
+                        Food(
+                            foodName,
+                            uploadImage(foodImgUri, foodName),
+                            data.getIntExtra("price", 0),
+                            data.getStringExtra("extraInfo")
+                        )
+                    )
+                    //리스트 뷰와 어댑터 간 아이템 갯수 매칭
+                    adapter.notifyDataSetChanged()
+                }
+            }
         }
     }
 
@@ -132,8 +143,5 @@ class ManageFragment : Fragment() {
 
         return fileName
     }
-
-
-
 
 }

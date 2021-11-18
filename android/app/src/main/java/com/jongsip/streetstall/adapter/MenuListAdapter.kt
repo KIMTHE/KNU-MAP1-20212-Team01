@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.jongsip.streetstall.R
@@ -48,6 +47,5 @@ class MenuListAdapter(val context: ManageFragment, private val data: ArrayList<F
 
         return view
     }
-
 
 }
