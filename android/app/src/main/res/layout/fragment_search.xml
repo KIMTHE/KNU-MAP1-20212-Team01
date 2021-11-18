@@ -21,4 +21,12 @@
         android:divider="#999999"
         android:dividerHeight="1dp"/>
 
+    <TextView
+        android:id="@+id/text_search_no_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="검색결과가 없습니다."
+        android:textSize="20sp"
+        android:visibility="invisible"/>
+
 </LinearLayout>

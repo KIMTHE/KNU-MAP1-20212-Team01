@@ -22,6 +22,7 @@ import com.jongsip.streetstall.activity.AddFoodActivity
 import com.jongsip.streetstall.adapter.MenuListAdapter
 import com.jongsip.streetstall.model.Food
 import com.jongsip.streetstall.model.Stall
+import com.jongsip.streetstall.util.FirebaseUtil
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -67,14 +68,12 @@ class ManageFragment : Fragment() {
         btnAddMenu = rootView.findViewById(R.id.btn_add_menu)
         btnManageComplete = rootView.findViewById(R.id.btn_manage_complete)
 
-        val docRef = firestore.collection("stall").document(uid)
-        docRef.get().addOnSuccessListener {
+        firestore.collection("stall").document(uid).get().addOnSuccessListener {
             editStallName.setText(it.data!!["name"].toString())
             editStallIntro.setText(it.data!!["brief"].toString())
 
-            if (it.data!!["foodMenu"] != null)
-            {
-                foodMenu = convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
+            if (it.data!!["foodMenu"] != null) {
+                foodMenu = FirebaseUtil.convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
                 listMenu.adapter = MenuListAdapter(this, foodMenu!!, uid)
             }
 
@@ -134,26 +133,7 @@ class ManageFragment : Fragment() {
         return fileName
     }
 
-    private fun convertToFood(dataFood: ArrayList<HashMap<String, *>>): ArrayList<Food> {
-        val returnMenu = ArrayList<Food>()
 
-        for (item in dataFood) {
-            val tmpLong = item["price"] as Long
-
-            returnMenu.add(
-                Food(
-                    item["name"] as String,
-                    item["imgRef"] as String?,
-                    tmpLong.toInt(),
-                    item["extraInfo"] as String?
-                )
-            )
-        }
-
-
-        return returnMenu
-
-    }
 
 
 }
