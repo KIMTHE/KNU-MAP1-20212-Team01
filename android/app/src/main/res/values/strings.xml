@@ -21,4 +21,9 @@
     <string name="item_stall_name_text">노점: %s</string>
     <string name="item_food_name_text">상품명: %s</string>
     <string name="item_food_price_text">가격: %d</string>
+    <string name="request_food_name_text">메뉴이름을 입력해주세요.</string>
+    <string name="request_img_food_text">음식 사진을 넣어주세요.</string>
+    <string name="request_food_info_text">추가정보를 입력해주세요.</string>
+    <string name="request_food_price_text">가격을 입력해주세요.</string>
+    <string name="complete_add_food_text">추가하기</string>
 </resources>

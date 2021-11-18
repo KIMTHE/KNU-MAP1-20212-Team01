@@ -39,7 +39,7 @@ class ManageFragment : Fragment() {
     private lateinit var storage: FirebaseStorage
     private lateinit var storageRef: StorageReference
     lateinit var uid: String
-    var foodMenu: ArrayList<Food>? = null
+    var foodMenu: ArrayList<Food> = ArrayList<Food>()
 
     companion object {
         const val ADD_REQUEST_CODE = 101
@@ -68,13 +68,14 @@ class ManageFragment : Fragment() {
         btnAddMenu = rootView.findViewById(R.id.btn_add_menu)
         btnManageComplete = rootView.findViewById(R.id.btn_manage_complete)
 
-        firestore.collection("stall").document(uid).get().addOnSuccessListener {
+        val docRef = firestore.collection("stall").document(uid)
+        docRef.get().addOnSuccessListener {
             editStallName.setText(it.data!!["name"].toString())
             editStallIntro.setText(it.data!!["brief"].toString())
 
             if (it.data!!["foodMenu"] != null) {
                 foodMenu = FirebaseUtil.convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
-                listMenu.adapter = MenuListAdapter(this, foodMenu!!, uid)
+                listMenu.adapter = MenuListAdapter(this, foodMenu, uid)
             }
 
         }
@@ -100,12 +101,11 @@ class ManageFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            if (foodMenu == null) foodMenu = ArrayList()
 
             val foodName = data!!.getStringExtra("name")!!
             val foodImgUri = Uri.parse(data.getStringExtra("imgUrl"))
 
-            foodMenu!!.add(
+            foodMenu.add(
                 Food(
                     foodName,
                     uploadImage(foodImgUri, foodName),
@@ -114,7 +114,7 @@ class ManageFragment : Fragment() {
                 )
             )
 
-            listMenu.adapter = MenuListAdapter(this, foodMenu!!, uid)
+            listMenu.adapter = MenuListAdapter(this, foodMenu, uid)
         }
     }
 
