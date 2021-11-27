@@ -6,6 +6,29 @@
     android:layout_height="match_parent"
     android:clipToOutline="true">
 
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/dark"
+        android:clipToOutline="true"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="161dp"
+            android:layout_height="22dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="17dp"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="4sp"
+            android:text="메뉴관리"
+            android:textColor="#FEFEFE"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
     <TextView
         android:layout_width="60dp"
         android:layout_height="16dp"
@@ -50,30 +73,7 @@
         android:layout_marginEnd="34dp"
         android:background="@drawable/border_round_stroke" />
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:background="#1A2330"
-        android:clipToOutline="true"
-        android:elevation="4dp">
-
-        <TextView
-            android:layout_width="161dp"
-            android:layout_height="22dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="17dp"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="4sp"
-            android:text="메뉴관리"
-            android:textColor="#FEFEFE"
-            android:textSize="20sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
+    <ImageButton
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_alignParentStart="true"
@@ -84,14 +84,14 @@
         android:elevation="16dp"
         >
 
-        <ImageView
+        <ImageButton
             android:id="@+id/add_menu"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_baseline_add_24"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"/>
-    </RelativeLayout>
+    </ImageButton>
 
     <View
         android:layout_width="160dp"
@@ -103,58 +103,3 @@
         android:elevation="16dp"/>
 
 </RelativeLayout>
-
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:orientation="vertical">-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/edit_stall_name"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="10dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginRight="10dp"-->
-<!--        android:hint="가게이름을 입력해주세요"-->
-<!--        android:autofillHints="hi" />-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/edit_stall_intro"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="10dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginRight="10dp"-->
-<!--        android:hint="소개를 입력해주세요" />-->
-
-
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="1"-->
-<!--        android:fillViewport="true"-->
-<!--        android:id="@+id/scrollView">-->
-
-<!--        <ListView-->
-<!--            android:id="@+id/list_menu"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginTop="20dp" />-->
-<!--    </ScrollView>-->
-
-<!--    <Button-->
-<!--        android:id="@+id/btn_add_menu"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:text="메뉴추가하기" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/btn_manage_complete"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:text="저장" />-->
-
-<!--</LinearLayout>-->
