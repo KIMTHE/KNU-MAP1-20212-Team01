@@ -1,4 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--<LinearLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:id="@+id/add_food"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:clipToOutline="true"-->
+<!--    android:orientation="vertical">-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="2"-->
+<!--        android:background="@color/dark">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="17dp"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:lineSpacingExtra="4sp"-->
+<!--            android:text="메뉴관리"-->
+<!--            android:textColor="@color/text_white"-->
+<!--            android:textSize="20sp" />-->
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="1"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginTop="35dp">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="top"-->
+<!--            android:text="가게이름"-->
+<!--            android:textColor="@color/text_black" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="4"-->
+<!--            android:background="@drawable/border_round_stroke">-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/edit_stall_name"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:background="@null" />-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="1"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginTop="17dp">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="top"-->
+<!--            android:text="한줄소개"-->
+<!--            android:textColor="@color/text_black" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="4"-->
+<!--            android:background="@drawable/border_round_stroke">-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/edit_stall_intro"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:background="@null" />-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+
+<!--    <ListView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="5">-->
+
+<!--    </ListView>-->
+<!--</LinearLayout>-->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/add_food"
@@ -40,20 +132,28 @@
         android:textColor="@color/text_black"
         android:gravity="top"/>
 
-    <EditText
-        android:id="@+id/edit_stall_name"
+    <RelativeLayout
         android:layout_width="225dp"
         android:layout_height="30dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
         android:layout_marginStart="101dp"
         android:layout_marginTop="84dp"
         android:layout_marginEnd="34dp"
-        android:background="@drawable/border_round_stroke" />
+        android:background="@drawable/border_round_stroke">
+
+        <EditText
+            android:id="@+id/edit_stall_name"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:background="@null" />
+    </RelativeLayout>
+
 
     <TextView
-        android:id="@+id/edit_stall_intro"
         android:layout_width="60dp"
         android:layout_height="16dp"
         android:layout_alignParentStart="true"
@@ -64,7 +164,7 @@
         android:text="한줄소개"
         android:gravity="top"/>
 
-    <EditText
+    <RelativeLayout
         android:layout_width="225dp"
         android:layout_height="30dp"
         android:layout_alignParentStart="true"
@@ -73,34 +173,49 @@
         android:layout_marginStart="101dp"
         android:layout_marginTop="131dp"
         android:layout_marginEnd="34dp"
-        android:background="@drawable/border_round_stroke" />
+        android:background="@drawable/border_round_stroke">
 
-    <RelativeLayout
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        <EditText
+            android:id="@+id/edit_stall_intro"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:background="@null" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="198dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="178dp"
+        android:fillViewport="true">
+
+        <ListView
+            android:id="@+id/list_menu"
+            android:layout_width="match_parent"
+            android:layout_height="500dp" />
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/relative_add_menu"
+        android:layout_width="379dp"
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginBottom="35dp"
         android:background="@drawable/border_round_no_stroke"
         android:elevation="16dp">
 
         <ImageButton
-            android:id="@+id/add_menu"
+            android:id="@+id/btn_add_menu"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_baseline_add_24"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
-
-    <View
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="34dp"
-        android:layout_marginTop="198dp"
-        android:background="@drawable/border_round_no_stroke"
-        android:elevation="16dp"/>
 
 </RelativeLayout>

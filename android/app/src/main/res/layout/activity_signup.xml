@@ -97,7 +97,7 @@
                     android:text="@string/customer_text"
                     android:background="@drawable/selector_radio_button"
                     android:textColor="@drawable/selector_radio_text"
-                    android:button="null"
+                    android:button="@null"
                     android:textAlignment="center"
                     android:checked="true"/>
 
@@ -108,7 +108,7 @@
                     android:id="@+id/rd_btn_seller"
                     android:background="@drawable/selector_radio_button"
                     android:textColor="@drawable/selector_radio_text"
-                    android:button="null"
+                    android:button="@null"
                     android:textAlignment="center"
                     android:text="@string/seller_text"/>
             </RadioGroup>

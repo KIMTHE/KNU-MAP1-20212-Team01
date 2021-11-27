@@ -37,7 +37,6 @@ class LoginActivity : AppCompatActivity() {
 
         btnLogin = findViewById(R.id.btn_login)
         btnSignup = findViewById(R.id.btn_signup)
-        btnGoogleLogin = findViewById(R.id.btn_google_login)
         editLoginID = findViewById(R.id.edit_login_id)
         editLoginPW = findViewById(R.id.edit_login_pw)
 

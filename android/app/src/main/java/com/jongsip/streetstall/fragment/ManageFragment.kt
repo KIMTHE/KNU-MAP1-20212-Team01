@@ -8,9 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ListView
+import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,7 +32,8 @@ class ManageFragment : Fragment() {
     lateinit var editStallName: EditText
     lateinit var editStallIntro: EditText
     lateinit var listMenu: ListView
-    lateinit var btnAddMenu: Button
+    lateinit var btnAddMenu: ImageButton
+    lateinit var relativeAddMenu : RelativeLayout
     private lateinit var btnManageComplete: Button
 
     lateinit var auth: FirebaseAuth
@@ -71,7 +70,8 @@ class ManageFragment : Fragment() {
         editStallIntro = rootView.findViewById(R.id.edit_stall_intro)
         listMenu = rootView.findViewById(R.id.list_menu)
         btnAddMenu = rootView.findViewById(R.id.btn_add_menu)
-        btnManageComplete = rootView.findViewById(R.id.btn_manage_complete)
+        relativeAddMenu = rootView.findViewById(R.id.relative_add_menu)
+        //btnManageComplete = rootView.findViewById(R.id.btn_manage_complete)
 
         val docRef = firestore.collection("stall").document(uid)
         docRef.get().addOnSuccessListener {
@@ -89,15 +89,19 @@ class ManageFragment : Fragment() {
             startActivityForResult(Intent(activity, AddFoodActivity::class.java), ADD_REQUEST_CODE)
         }
 
-        btnManageComplete.setOnClickListener {
-            firestore.collection("stall").document(uid).set(
-                Stall(
-                    editStallName.text.toString(),
-                    editStallIntro.text.toString(),
-                    foodMenu
-                )
-            )
+        relativeAddMenu.setOnClickListener {
+            startActivityForResult(Intent(activity, AddFoodActivity::class.java), ADD_REQUEST_CODE)
         }
+
+//        btnManageComplete.setOnClickListener {
+//            firestore.collection("stall").document(uid).set(
+//                Stall(
+//                    editStallName.text.toString(),
+//                    editStallIntro.text.toString(),
+//                    foodMenu
+//                )
+//            )
+//        }
 
         return rootView
     }
@@ -123,6 +127,15 @@ class ManageFragment : Fragment() {
                     )
                     //리스트 뷰와 어댑터 간 아이템 갯수 매칭
                     adapter.notifyDataSetChanged()
+
+                    //메뉴 등록 후 저장버튼 없이 바로 저장
+                    firestore.collection("stall").document(uid).set(
+                        Stall(
+                            editStallName.text.toString(),
+                            editStallIntro.text.toString(),
+                            foodMenu
+                        )
+                    )
                 }
             }
         }
