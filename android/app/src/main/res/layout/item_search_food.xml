@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:padding="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
     android:orientation="horizontal"
-    android:background="@drawable/square_background_border_black">
+    android:background="@drawable/border_radius_with_black">
 
     <ImageView
         android:id="@+id/img_search_food"
@@ -14,7 +16,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:scaleType="fitXY"
-        android:background="@drawable/square_background_border_black"/>
+        android:background="@drawable/border_radius_with_black"/>
 
     <LinearLayout
         android:layout_width="0dp"
