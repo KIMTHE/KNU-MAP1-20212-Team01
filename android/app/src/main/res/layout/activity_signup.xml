@@ -6,38 +6,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".login.SignupActivity">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="@color/dark"
+            android:clipToOutline="true"
+            android:elevation="4dp">
+
+            <TextView
+                android:layout_width="161dp"
+                android:layout_height="22dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="17dp"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="4sp"
+                android:text="회원가입"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:gravity="center">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/signUp_text" />
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -56,12 +59,14 @@
                 <EditText
                     android:id="@+id/edit_email"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="1"
-                    android:gravity="bottom"
+                    android:paddingLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/border_round_stroke"
                     android:hint="@string/email_text"
                     android:inputType="textEmailAddress"
                     android:text="" />
@@ -70,7 +75,9 @@
             <EditText
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:layout_height="40dp"
+                android:background="@drawable/border_round_stroke"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="20dp"
@@ -88,6 +95,10 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/rd_btn_customer"
                     android:text="@string/customer_text"
+                    android:background="@drawable/selector_radio_button"
+                    android:textColor="@drawable/selector_radio_text"
+                    android:button="null"
+                    android:textAlignment="center"
                     android:checked="true"/>
 
                 <RadioButton
@@ -95,11 +106,16 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:id="@+id/rd_btn_seller"
+                    android:background="@drawable/selector_radio_button"
+                    android:textColor="@drawable/selector_radio_text"
+                    android:button="null"
+                    android:textAlignment="center"
                     android:text="@string/seller_text"/>
             </RadioGroup>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/signup_okButton"
+                android:background="@drawable/border_round_stroke"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -109,7 +125,6 @@
                 android:gravity="center"
                 android:text="@string/signUp_complete_text"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

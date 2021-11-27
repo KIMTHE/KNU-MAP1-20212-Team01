@@ -38,7 +38,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="436dp"
+                android:layout_height="394dp"
                 android:layout_gravity="fill_vertical"
                 android:src="@drawable/food_stall" />
 
@@ -62,15 +62,15 @@
 
                 <EditText
                     android:id="@+id/edit_login_id"
-                    android:background="@drawable/border_round_stroke"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/text_id"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="20dp"
+                    android:background="@drawable/border_round_stroke"
+                    android:gravity="center"
                     android:hint="@string/email_text"
-                    android:layout_below="@id/text_id"
                     android:inputType="textEmailAddress" />
 
                 <TextView
@@ -83,14 +83,14 @@
 
                 <EditText
                     android:id="@+id/edit_login_pw"
-                    android:gravity="center"
-                    android:background="@drawable/border_round_stroke"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/text_pw"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="20dp"
-                    android:layout_below="@id/text_pw"
+                    android:background="@drawable/border_round_stroke"
+                    android:gravity="center"
                     android:hint="@string/password_text"
                     android:inputType="textPassword" />
 
