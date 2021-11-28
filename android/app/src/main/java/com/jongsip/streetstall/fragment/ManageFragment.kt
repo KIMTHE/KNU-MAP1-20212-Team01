@@ -83,7 +83,6 @@ class ManageFragment : Fragment() {
                 adapter = MenuListAdapter(this, foodMenu, uid)
                 listMenu.adapter = adapter
             }
-
         }
 
         btnAddMenu.setOnClickListener {
@@ -105,29 +104,51 @@ class ManageFragment : Fragment() {
             val foodName = data!!.getStringExtra("name")!!
             val foodImgUri = Uri.parse(data.getStringExtra("imgUrl"))
 
-            //동기화를 위해 메뉴 추가 후 firbase에 업로드 할때까지 thread를 blocking
-            runBlocking {
-                //이미지 등록 및 리스트 뷰와 어댑터 간 아이템 갯수 매칭
-                GlobalScope.async {
-                    foodMenu!!.add(
-                        Food(
-                            foodName,
-                            uploadImage(foodImgUri, foodName),
-                            data.getIntExtra("price", 0),
-                            data.getStringExtra("extraInfo")
-                        )
+            Thread {
+                foodMenu!!.add(
+                    Food(
+                        foodName,
+                        uploadImage(foodImgUri, foodName),
+                        data.getIntExtra("price", 0),
+                        data.getStringExtra("extraInfo")
                     )
-                    //메뉴 등록 후 저장버튼 없이 바로 저장
-                    firestore.collection("stall").document(uid).set(
-                        Stall(
-                            editStallName.text.toString(),
-                            editStallIntro.text.toString(),
-                            foodMenu
-                        )
+                )
+
+                firestore.collection("stall").document(uid).set(
+                    Stall(
+                        editStallName.text.toString(),
+                        editStallIntro.text.toString(),
+                        foodMenu
                     )
+                )
+
+                requireActivity().runOnUiThread {
+                    adapter.notifyDataSetChanged()
                 }
-            }
-            adapter.notifyDataSetChanged()
+            }.start()
+
+            //동기화를 위해 메뉴 추가 후 firbase에 업로드 할때까지 thread를 blocking
+//            runBlocking {
+//                //이미지 등록 및 리스트 뷰와 어댑터 간 아이템 갯수 매칭
+//                GlobalScope.async {
+//                    foodMenu!!.add(
+//                        Food(
+//                            foodName,
+//                            uploadImage(foodImgUri, foodName),
+//                            data.getIntExtra("price", 0),
+//                            data.getStringExtra("extraInfo")
+//                        )
+//                    )
+//                    //메뉴 등록 후 저장버튼 없이 바로 저장
+//                    firestore.collection("stall").document(uid).set(
+//                        Stall(
+//                            editStallName.text.toString(),
+//                            editStallIntro.text.toString(),
+//                            foodMenu
+//                        )
+//                    )
+//                }
+//            }
         }
     }
 
