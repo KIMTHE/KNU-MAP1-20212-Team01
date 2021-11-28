@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="394dp"
                 android:layout_gravity="fill_vertical"
-                android:src="@drawable/food_stall" />
+                android:src="@drawable/logo" />
 
         </LinearLayout>
 
