@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseUser
 import com.jongsip.streetstall.R
@@ -25,6 +26,9 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener 
     var lat = 0.0
     var lng = 0.0
 
+    //최근에 뒤로가기 버튼을 누른 시각
+    private var backPressedTime: Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_seller)
@@ -32,8 +36,6 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener 
         uid = intent.getStringExtra("uid")!!
         bottomNavigation = findViewById(R.id.bottom_navi_seller)
 
-        supportFragmentManager.beginTransaction().add(R.id.fragment_frame_seller, MapsFragment())
-            .commit()
 
         replaceFragment(MapsFragment(),"map")
         bottomNavigation.setOnNavigationItemSelectedListener {
@@ -57,6 +59,7 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener 
         bundle.putDouble("longitude", lng)
         fragmentClass.arguments = bundle //유저 정보를 넘겨줌
 
+        supportFragmentManager.popBackStackImmediate(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_frame_seller, (fragmentClass),tag)
             .addToBackStack(tag).commit()
@@ -71,6 +74,21 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener 
 
     //뒤로가기버튼을 누를때 콜백
     override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 1) {
+            val tempTime = System.currentTimeMillis()
+            val intervalTime = tempTime - backPressedTime
+
+            //2초이내 한번 더 뒤로가기 눌렀을 때, 종료
+            if (!(0 > intervalTime || 2000 < intervalTime)) {
+                finishAffinity()
+                System.runFinalization()
+                exitProcess(0)
+            } else {
+                backPressedTime = tempTime
+                Toast.makeText(this, "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
         super.onBackPressed()
         updateBottomMenu()
     }

@@ -58,12 +58,12 @@
         android:layout_width="60dp"
         android:layout_height="20dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="33dp"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="33dp"
         android:layout_marginTop="137dp"
-        android:textColor="@color/text_black"
+        android:gravity="top"
         android:text="한줄소개"
-        android:gravity="top"/>
+        android:textColor="@color/text_black" />
 
     <EditText
         android:id="@+id/edit_stall_intro"
@@ -81,27 +81,24 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="480dp"
-        android:layout_alignParentStart="true"
+        android:layout_height="400dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
         android:layout_marginTop="178dp"
         android:fillViewport="true">
 
         <ListView
             android:id="@+id/list_menu"
             android:layout_width="match_parent"
-            android:layout_height="480dp" />
+            android:layout_height="wrap_content" />
     </ScrollView>
 
     <RelativeLayout
         android:id="@+id/relative_add_menu"
         android:layout_width="379dp"
         android:layout_height="70dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="14dp"
-        android:layout_marginBottom="30dp"
+        android:layout_alignBottom="@id/btn_manage_complete"
+        android:layout_marginBottom="60dp"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/border_round_no_stroke"
         android:elevation="16dp">
 
@@ -109,9 +106,21 @@
             android:id="@+id/btn_add_menu"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_baseline_add_24"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
+            android:src="@drawable/ic_baseline_add_24" />
     </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_manage_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/border_round_stroke"
+        android:text="@string/manage_complete_text"
+        android:textAlignment="center"
+        android:textColor="@color/black" />
 
 </RelativeLayout>

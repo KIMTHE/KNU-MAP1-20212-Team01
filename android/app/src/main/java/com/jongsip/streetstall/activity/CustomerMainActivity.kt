@@ -1,17 +1,23 @@
 package com.jongsip.streetstall.activity
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jongsip.streetstall.R
 import com.jongsip.streetstall.fragment.*
 import com.jongsip.streetstall.util.PermissionUtil
+import kotlin.system.exitProcess
 
 class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener {
 
     private lateinit var bottomNavigation: BottomNavigationView
     lateinit var uid: String
+
+    //최근에 뒤로가기 버튼을 누른 시각
+    private var backPressedTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +26,7 @@ class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListene
         uid = intent.getStringExtra("uid")!!
         bottomNavigation = findViewById(R.id.bottom_navi_customer)
 
-        supportFragmentManager.beginTransaction().add(R.id.fragment_frame_customer, MapsFragment())
-            .commit()
-
+        replaceFragment(MapsFragment(),"map")
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_map -> replaceFragment(MapsFragment(),"map")
@@ -41,6 +45,7 @@ class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListene
         bundle.putString("uid", uid)
         fragmentClass.arguments = bundle //유저 정보를 넘겨줌
 
+        supportFragmentManager.popBackStackImmediate(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_frame_customer, (fragmentClass),tag)
             .addToBackStack(tag).commit()
@@ -55,6 +60,21 @@ class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListene
 
     //뒤로가기버튼을 누를때 콜백
     override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 1) {
+            val tempTime = System.currentTimeMillis()
+            val intervalTime = tempTime - backPressedTime
+
+            //2초이내 한번 더 뒤로가기 눌렀을 때, 종료
+            if (!(0 > intervalTime || 2000 < intervalTime)) {
+                finishAffinity()
+                System.runFinalization()
+                exitProcess(0)
+            } else {
+                backPressedTime = tempTime
+                Toast.makeText(this, "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
         super.onBackPressed()
         updateBottomMenu()
     }
