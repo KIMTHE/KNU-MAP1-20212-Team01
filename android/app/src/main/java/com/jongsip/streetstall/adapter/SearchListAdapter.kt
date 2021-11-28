@@ -40,13 +40,10 @@ class SearchListAdapter(val context: SearchFragment, private val data: ArrayList
             }
         }
 
-        view.findViewById<TextView>(R.id.text_search_stall_name).text =
-            String.format(context.getString(R.string.item_stall_name_text),item.stallName )
-        view.findViewById<TextView>(R.id.text_search_food_name).text =
-            String.format(context.getString(R.string.item_food_name_text), item.food.name)
+        view.findViewById<TextView>(R.id.text_search_stall_name).text = item.stallName.toString()
+        view.findViewById<TextView>(R.id.text_search_food_name).text = item.food.name.toString()
         view.findViewById<TextView>(R.id.text_search_food_info).text = item.food.extraInfo
-        view.findViewById<TextView>(R.id.text_search_food_price).text =
-            String.format(context.getString(R.string.item_food_price_text),item.food.price)
+        view.findViewById<TextView>(R.id.text_search_food_price).text = item.food.price.toString()
 
         return view
     }

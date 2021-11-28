@@ -34,7 +34,6 @@ class ManageFragment : Fragment() {
     lateinit var listMenu: ListView
     lateinit var btnAddMenu: ImageButton
     lateinit var relativeAddMenu : RelativeLayout
-    private lateinit var btnManageComplete: Button
 
     lateinit var auth: FirebaseAuth
     lateinit var firestore: FirebaseFirestore
@@ -71,7 +70,6 @@ class ManageFragment : Fragment() {
         listMenu = rootView.findViewById(R.id.list_menu)
         btnAddMenu = rootView.findViewById(R.id.btn_add_menu)
         relativeAddMenu = rootView.findViewById(R.id.relative_add_menu)
-        //btnManageComplete = rootView.findViewById(R.id.btn_manage_complete)
 
         val docRef = firestore.collection("stall").document(uid)
         docRef.get().addOnSuccessListener {
