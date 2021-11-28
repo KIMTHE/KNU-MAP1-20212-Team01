@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.size
+import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -78,7 +80,8 @@ class ManageFragment : Fragment() {
 
             if (it.data!!["foodMenu"] != null) {
                 foodMenu = FirebaseUtil.convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
-                listMenu.adapter = MenuListAdapter(this, foodMenu, uid)
+                adapter = MenuListAdapter(this, foodMenu, uid)
+                listMenu.adapter = adapter
             }
 
         }
@@ -90,16 +93,6 @@ class ManageFragment : Fragment() {
         relativeAddMenu.setOnClickListener {
             startActivityForResult(Intent(activity, AddFoodActivity::class.java), ADD_REQUEST_CODE)
         }
-
-//        btnManageComplete.setOnClickListener {
-//            firestore.collection("stall").document(uid).set(
-//                Stall(
-//                    editStallName.text.toString(),
-//                    editStallIntro.text.toString(),
-//                    foodMenu
-//                )
-//            )
-//        }
 
         return rootView
     }
@@ -114,6 +107,7 @@ class ManageFragment : Fragment() {
 
             //동기화를 위해 메뉴 추가 후 firbase에 업로드 할때까지 thread를 blocking
             runBlocking {
+                //이미지 등록 및 리스트 뷰와 어댑터 간 아이템 갯수 매칭
                 GlobalScope.async {
                     foodMenu!!.add(
                         Food(
@@ -123,9 +117,6 @@ class ManageFragment : Fragment() {
                             data.getStringExtra("extraInfo")
                         )
                     )
-                    //리스트 뷰와 어댑터 간 아이템 갯수 매칭
-                    adapter.notifyDataSetChanged()
-
                     //메뉴 등록 후 저장버튼 없이 바로 저장
                     firestore.collection("stall").document(uid).set(
                         Stall(
@@ -136,10 +127,13 @@ class ManageFragment : Fragment() {
                     )
                 }
             }
+            adapter.notifyDataSetChanged()
         }
     }
 
-    //Firebase Storage 에 이미지를 업로드 하는 함수.
+
+
+    //Firebase Storage 에 이미지1를 업로드 하는 함수.
     private fun uploadImage(uri: Uri, foodName: String): String? {
         //파일 이름 생성
         val fileName = "${foodName}_${SimpleDateFormat("yyyymmdd_HHmmss").format(Date())}_.jpg"
