@@ -84,7 +84,7 @@ class SearchFragment : Fragment() {
                     }
                 }
             }
-            listSearchFood.adapter = SearchListAdapter(this@SearchFragment, searchData)
+            listSearchFood.adapter = SearchListAdapter(this@SearchFragment,getActivity(), searchData)
         }
 
     }
