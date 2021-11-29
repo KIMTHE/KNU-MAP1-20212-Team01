@@ -1,7 +1,8 @@
 package com.jongsip.streetstall.fragment
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.ListView
 import androidx.appcompat.widget.SearchView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jongsip.streetstall.R
+import com.jongsip.streetstall.activity.NavigationActivityInterface
 import com.jongsip.streetstall.adapter.SearchListAdapter
 import com.jongsip.streetstall.model.SearchFood
 import com.jongsip.streetstall.model.WorkingPosition
@@ -23,6 +25,12 @@ class SearchFragment : Fragment() {
 
     lateinit var uid: String
     lateinit var firestore: FirebaseFirestore
+
+    private var mActivity: Activity? = null
+
+    companion object {
+        const val TAG = "SearchFragment"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,23 +67,26 @@ class SearchFragment : Fragment() {
     fun searchFood(searchFoodName: String) {
         val searchData = ArrayList<SearchFood>()
 
-        firestore.collection("working").get().addOnSuccessListener { documents ->
-            for (document in documents) {
+        firestore.collection("working").get().addOnSuccessListener { workingDocs ->
+            val workingIds = HashSet<String>()
+            workingDocs.forEach { workingIds.add(it.id) }
 
-                firestore.collection("stall").document(document.id).get().addOnSuccessListener {
+            firestore.collection("stall").get().addOnSuccessListener { stallDocs ->
+                stallDocs.filter { it.id in workingIds }.forEach { stallDoc ->
+                    val workingDoc = workingDocs.filter { it.id == stallDoc.id }[0]
                     val menuData =
-                        FirebaseUtil.convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
+                        FirebaseUtil.convertToFood(stallDoc.data["foodMenu"] as ArrayList<HashMap<String, *>>)
                     for (foodData in menuData) {
                         //찾고있는 상품이 존재할 때, 검색열에 추가
                         if (foodData.name == searchFoodName) {
                             searchData.add(
                                 SearchFood(
-                                    document.id,
-                                    it.data!!["name"] as String,
+                                    stallDoc.id,
+                                    stallDoc.data["name"] as String,
                                     foodData,
                                     WorkingPosition(
-                                        document.data["latitude"].toString().toDouble(),
-                                        document.data["longitude"].toString().toDouble()
+                                        workingDoc.data["latitude"].toString().toDouble(),
+                                        workingDoc.data["longitude"].toString().toDouble()
                                     )
                                 )
                             )
@@ -83,14 +94,21 @@ class SearchFragment : Fragment() {
                         }
                     }
                 }
+                listSearchFood.adapter = SearchListAdapter(
+                    mActivity,
+                    mActivity as NavigationActivityInterface, searchData
+                )
             }
-            listSearchFood.adapter = SearchListAdapter(this@SearchFragment,getActivity(), searchData)
         }
-
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mActivity = requireActivity()
+    }
 
-    companion object {
-        const val TAG = "SearchFragment"
+    override fun onDetach() {
+        super.onDetach()
+        mActivity = null
     }
 }

@@ -11,7 +11,7 @@ import com.jongsip.streetstall.fragment.*
 import com.jongsip.streetstall.util.PermissionUtil
 import kotlin.system.exitProcess
 
-class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener {
+class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener, NavigationActivityInterface {
 
     private lateinit var bottomNavigation: BottomNavigationView
     lateinit var uid: String
@@ -40,7 +40,7 @@ class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListene
         PermissionUtil.requestLocationPermission(this)//위치 권한 요청
     }
 
-    private fun replaceFragment(fragmentClass: Fragment, tag: String) {
+    override fun replaceFragment(fragmentClass: Fragment, tag: String) {
         val bundle = Bundle()
         bundle.putString("uid", uid)
         fragmentClass.arguments = bundle //유저 정보를 넘겨줌
@@ -80,7 +80,7 @@ class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListene
     }
 
     //태그를 통해 현재 프래그먼트를 찾아서, 메뉴활성화
-    private fun updateBottomMenu() {
+    override fun updateBottomMenu() {
         val tag1: Fragment? = supportFragmentManager.findFragmentByTag("map")
         val tag2: Fragment? = supportFragmentManager.findFragmentByTag("search")
         val tag3: Fragment? = supportFragmentManager.findFragmentByTag("bookmark")

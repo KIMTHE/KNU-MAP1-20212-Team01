@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.jongsip.streetstall.activity.CustomerMainActivity
 
 object PermissionUtil {
 

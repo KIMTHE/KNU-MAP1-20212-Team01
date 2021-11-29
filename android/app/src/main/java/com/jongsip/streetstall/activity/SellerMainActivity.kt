@@ -1,25 +1,18 @@
 package com.jongsip.streetstall.activity
 
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseUser
 import com.jongsip.streetstall.R
 import com.jongsip.streetstall.fragment.*
 import com.jongsip.streetstall.util.PermissionUtil
 import kotlin.system.exitProcess
 
-class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener {
+class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener, NavigationActivityInterface {
 
     private lateinit var bottomNavigation: BottomNavigationView
     lateinit var uid: String
@@ -52,7 +45,7 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener 
     }
 
 
-    private fun replaceFragment(fragmentClass: Fragment, tag: String) {
+    override fun replaceFragment(fragmentClass: Fragment, tag: String) {
         val bundle = Bundle()
         bundle.putString("uid", uid)
         bundle.putDouble("latitude", lat)
@@ -94,7 +87,7 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener 
     }
 
     //태그를 통해 현재 프래그먼트를 찾아서, 메뉴활성화
-    private fun updateBottomMenu() {
+    override fun updateBottomMenu() {
         val tag1: Fragment? = supportFragmentManager.findFragmentByTag("map")
         val tag2: Fragment? = supportFragmentManager.findFragmentByTag("search")
         val tag3: Fragment? = supportFragmentManager.findFragmentByTag("manage")
