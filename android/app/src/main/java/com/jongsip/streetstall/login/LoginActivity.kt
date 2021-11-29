@@ -22,7 +22,6 @@ import com.jongsip.streetstall.activity.SellerMainActivity
 class LoginActivity : AppCompatActivity() {
     lateinit var btnLogin: Button
     lateinit var btnSignup: Button
-    private lateinit var btnGoogleLogin: Button
     lateinit var editLoginID: EditText
     lateinit var editLoginPW: EditText
 
