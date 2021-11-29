@@ -30,22 +30,23 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener,
         bottomNavigation = findViewById(R.id.bottom_navi_seller)
 
 
-        replaceFragment(MapsFragment(),"map")
+        replaceFragment(MapsFragment(),"map", lat, lng)
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.menu_map -> replaceFragment(MapsFragment(),"map")
-                R.id.menu_search -> replaceFragment(SearchFragment(),"search")
-                R.id.menu_manage -> replaceFragment(ManageFragment(),"manage")
-                else -> replaceFragment(SettingFragment(),"setting")
+                R.id.menu_map -> replaceFragment(MapsFragment(),"map", lat, lng)
+                R.id.menu_search -> replaceFragment(SearchFragment(),"search", lat, lng)
+                R.id.menu_manage -> replaceFragment(ManageFragment(),"manage", lat, lng)
+                else -> replaceFragment(SettingFragment(),"setting", lat , lng)
             }
             true
         }
 
         PermissionUtil.requestLocationPermission(this)//위치 권한 요청
+
     }
 
 
-    override fun replaceFragment(fragmentClass: Fragment, tag: String) {
+    override fun replaceFragment(fragmentClass: Fragment, tag: String, lat: Double, lng: Double) {
         val bundle = Bundle()
         bundle.putString("uid", uid)
         bundle.putDouble("latitude", lat)
@@ -62,7 +63,7 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener,
     override fun onDataPass(latitude : Double,longitude : Double) {
         lat = latitude
         lng = longitude
-        Log.d("pass", ""+latitude + longitude)
+        Log.d("pass : ", ""+latitude + longitude)
     }
 
     //뒤로가기버튼을 누를때 콜백

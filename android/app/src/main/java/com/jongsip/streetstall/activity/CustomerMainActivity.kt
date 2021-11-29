@@ -1,6 +1,7 @@
 package com.jongsip.streetstall.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -26,13 +27,13 @@ class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListene
         uid = intent.getStringExtra("uid")!!
         bottomNavigation = findViewById(R.id.bottom_navi_customer)
 
-        replaceFragment(MapsFragment(),"map")
+        replaceFragment(MapsFragment(),"map",0.0,0.0)
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.menu_map -> replaceFragment(MapsFragment(),"map")
-                R.id.menu_search -> replaceFragment(SearchFragment(),"search")
-                R.id.menu_manage -> replaceFragment(BookmarkFragment(),"bookmark")
-                else -> replaceFragment(SettingFragment(),"setting")
+                R.id.menu_map -> replaceFragment(MapsFragment(),"map",0.0,0.0)
+                R.id.menu_search -> replaceFragment(SearchFragment(),"search",0.0,0.0)
+                R.id.menu_manage -> replaceFragment(BookmarkFragment(),"bookmark",0.0,0.0)
+                else -> replaceFragment(SettingFragment(),"setting",0.0,0.0)
             }
             true
         }
@@ -40,9 +41,11 @@ class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListene
         PermissionUtil.requestLocationPermission(this)//위치 권한 요청
     }
 
-    override fun replaceFragment(fragmentClass: Fragment, tag: String) {
+    override fun replaceFragment(fragmentClass: Fragment, tag: String, lat: Double , lng:Double) {
         val bundle = Bundle()
         bundle.putString("uid", uid)
+        bundle.putDouble("latitude", lat)
+        bundle.putDouble("longitude", lng)
         fragmentClass.arguments = bundle //유저 정보를 넘겨줌
 
         supportFragmentManager.popBackStackImmediate(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE)

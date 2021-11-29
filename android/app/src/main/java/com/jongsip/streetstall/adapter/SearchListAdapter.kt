@@ -1,6 +1,8 @@
 package com.jongsip.streetstall.adapter
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +22,7 @@ import com.jongsip.streetstall.fragment.SearchFragment
 
 import com.jongsip.streetstall.R
 import com.jongsip.streetstall.activity.NavigationActivityInterface
+import com.jongsip.streetstall.activity.SellerMainActivity
 
 
 class SearchListAdapter(
@@ -68,23 +71,16 @@ class SearchListAdapter(
         val searchedFood: RelativeLayout =
             view.findViewById(com.jongsip.streetstall.R.id.searched_food)
         searchedFood.setOnClickListener {
-            Log.d("가게이름 : ", item.uid)
 
             //uid 를 이용하여 가게 위도 경도 찾아서 MapsFragment 로 보내기
             val docRef = firestore.collection("working").document(item.uid)
-            val bundle = Bundle()
-            var lat: Double
-            var lng: Double
+            var lat: Double = 0.0
+            var lng: Double = 0.0
             docRef.get().addOnSuccessListener {
-                val lat = it.data?.get("latitude").toString().toDouble()
-                val lng = it.data?.get("longitude").toString().toDouble()
-                bundle.putDouble("latitude", lat)
-                bundle.putDouble("longitude", lng)
+                lat = it.data?.get("latitude").toString().toDouble()
+                lng = it.data?.get("longitude").toString().toDouble()
+                activity.replaceFragment(MapsFragment(), "map", lat, lng)
             }
-            MapsFragment().arguments = bundle //유저 정보를 넘겨줌
-
-            activity.replaceFragment(MapsFragment(), "map")
-
         }
         return view
     }

@@ -112,8 +112,19 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         mLocationManager = mContext.getSystemService(LOCATION_SERVICE) as LocationManager
         //최신 위치가 갱신될 때 호출
         mLocationListener = LocationListener { location ->
-            lat = location.latitude
-            lng = location.longitude
+
+            //검색으로 맵프래그먼트로 왔을때
+            lat = arguments?.getDouble("latitude") ?:0.0
+            lng = arguments?.getDouble("longitude")?:0.0
+            arguments?.remove("latitude")
+            arguments?.remove("longitude")
+
+            //검색이 아닐 때
+            if(lat==0.0 && lng == 0.0) {
+                lat = location.latitude
+                lng = location.longitude
+            }
+
             Log.d("GmapViewFragment", "Lat: ${lat}, lon: $lng")
             val currentLocation = LatLng(lat, lng)
             gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17f))
@@ -158,7 +169,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 )
             }
         }
-
         return rootView
     }
 
@@ -207,6 +217,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         gMap = googleMap
+
         btnMoveHere.performClick()
     }
 
