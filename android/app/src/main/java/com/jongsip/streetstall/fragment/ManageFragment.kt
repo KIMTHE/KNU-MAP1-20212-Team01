@@ -73,6 +73,7 @@ class ManageFragment : Fragment() {
         relativeAddMenu = rootView.findViewById(R.id.relative_add_menu)
         btnManageComplete = rootView.findViewById(R.id.btn_manage_complete)
 
+        //해당 판매자계정의 노점 정보를 받아서 view 에 세팅
         val docRef = firestore.collection("stall").document(uid)
         docRef.get().addOnSuccessListener {
             editStallName.setText(it.data!!["name"].toString())
@@ -86,10 +87,12 @@ class ManageFragment : Fragment() {
             }
         }
 
+        //메뉴추가 버튼
         relativeAddMenu.setOnClickListener {
             startActivityForResult(Intent(activity, AddFoodActivity::class.java), ADD_REQUEST_CODE)
         }
 
+        //노점정보 저장 버튼
         btnManageComplete.setOnClickListener {
             firestore.collection("stall").document(uid).set(
                 Stall(
