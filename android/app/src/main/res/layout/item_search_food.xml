@@ -16,6 +16,7 @@
         android:layout_marginTop="35dp"
         android:background="@drawable/border_round_no_stroke"
         android:elevation="16dp"
+        android:scaleType="centerInside"
         android:padding="5dp"/>
 
     <TextView
@@ -71,7 +72,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="136dp"
         android:layout_marginTop="115dp"
-        android:text="가격"
+        android:text="@string/price_text"
         android:textColor="@color/text_black"
         android:gravity="top" />
 

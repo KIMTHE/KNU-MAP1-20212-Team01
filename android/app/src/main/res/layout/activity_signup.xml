@@ -60,7 +60,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="1"
-                    android:paddingLeft="5dp"
+                    android:paddingStart="5dp"
                     android:gravity="center_vertical"
                     android:background="@drawable/border_round_stroke"
                     android:hint="@string/email_text"
@@ -71,7 +71,7 @@
             <EditText
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
-                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
                 android:layout_height="40dp"
                 android:background="@drawable/border_round_stroke"
                 android:layout_marginLeft="5dp"
@@ -110,7 +110,7 @@
             </RadioGroup>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/signup_okButton"
+                android:id="@+id/btn_signup_complete"
                 android:background="@drawable/border_round_stroke"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"

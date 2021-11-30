@@ -32,7 +32,7 @@ class SignupActivity : AppCompatActivity() {
         fireStore = FirebaseFirestore.getInstance()
         setContentView(R.layout.activity_signup)
 
-        signupOkButton = findViewById(R.id.signup_okButton)
+        signupOkButton = findViewById(R.id.btn_signup_complete)
         editEmail = findViewById(R.id.edit_email)
         editPassword = findViewById(R.id.edit_password)
         rdGroupUserType = findViewById(R.id.rd_group_userType)

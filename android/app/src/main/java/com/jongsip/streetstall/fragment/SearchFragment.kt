@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jongsip.streetstall.R
@@ -22,6 +23,7 @@ class SearchFragment : Fragment() {
 
     lateinit var searchViewFood: SearchView
     lateinit var listSearchFood: ListView
+    lateinit var textSearchNoResult: TextView
 
     lateinit var uid: String
     lateinit var firestore: FirebaseFirestore
@@ -47,6 +49,7 @@ class SearchFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_search, container, false)
         listSearchFood = rootView.findViewById(R.id.list_search_food)
         searchViewFood = rootView.findViewById(R.id.search_view_food)
+        textSearchNoResult = rootView.findViewById(R.id.text_search_no_result)
 
         searchViewFood.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -94,10 +97,16 @@ class SearchFragment : Fragment() {
                         }
                     }
                 }
-                listSearchFood.adapter = SearchListAdapter(
-                    mActivity,
-                    mActivity as NavigationActivityInterface, searchData
-                )
+
+                if(searchData.size == 0) textSearchNoResult.visibility = View.VISIBLE
+                else{
+                    listSearchFood.adapter = SearchListAdapter(
+                        mActivity,
+                        mActivity as NavigationActivityInterface, searchData
+                    )
+                    textSearchNoResult.visibility = View.INVISIBLE
+                }
+
             }
         }
     }

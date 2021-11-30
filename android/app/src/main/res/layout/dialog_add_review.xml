@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <RatingBar
+        android:id="@+id/rating_review_score"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/rating_review_score"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"/>
+
+    <TextView
+        android:id="@+id/text_review_content"
+        android:layout_width="60dp"
+        android:layout_height="20dp"
+        app:layout_constraintTop_toBottomOf="@id/rating_review_score"
+        app:layout_constraintStart_toStartOf="@id/rating_review_score"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/extra_info_text"
+        android:textColor="@color/text_black" />
+
+    <EditText
+        android:id="@+id/edit_review_content"
+        android:layout_width="0dp"
+        android:layout_height="128dp"
+        app:layout_constraintTop_toBottomOf="@id/text_review_content"
+        app:layout_constraintStart_toStartOf="@id/rating_review_score"
+        app:layout_constraintEnd_toEndOf="@id/rating_review_score"
+        android:layout_margin="10dp"
+        android:background="@drawable/border_round_stroke"
+        android:gravity="top"
+        android:paddingHorizontal="10dp"
+        android:textColor="@color/text_black" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_review_complete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/edit_review_content"
+        app:layout_constraintStart_toStartOf="@id/edit_review_content"
+        app:layout_constraintEnd_toEndOf="@id/edit_review_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/border_round_stroke"
+        android:text="@string/add_review_complete_text"
+        android:textAlignment="center"
+        android:textColor="@color/black" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

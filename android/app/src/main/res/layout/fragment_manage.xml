@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/add_food"
+    android:id="@+id/layout_add_food"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToOutline="true">
@@ -24,7 +24,7 @@
             android:layout_marginStart="17dp"
             android:gravity="center_vertical"
             android:lineSpacingExtra="4sp"
-            android:text="메뉴관리"
+            android:text="@string/menu_text"
             android:textColor="@color/text_white"
             android:textSize="20sp" />
     </RelativeLayout>
@@ -36,7 +36,7 @@
         android:layout_marginStart="33dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="91dp"
-        android:text="가게이름"
+        android:text="@string/stall_name_text"
         android:textColor="@color/text_black"
         android:gravity="top"/>
 
@@ -62,7 +62,7 @@
         android:layout_marginStart="33dp"
         android:layout_marginTop="137dp"
         android:gravity="top"
-        android:text="한줄소개"
+        android:text="@string/stall_intro_text"
         android:textColor="@color/text_black" />
 
     <EditText
@@ -89,11 +89,13 @@
         <ListView
             android:id="@+id/list_menu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:divider="#999999"
+            android:dividerHeight="1dp"/>
     </ScrollView>
 
     <RelativeLayout
-        android:id="@+id/relative_add_menu"
+        android:id="@+id/layout_add_menu"
         android:layout_width="379dp"
         android:layout_height="70dp"
         android:layout_alignBottom="@id/btn_manage_complete"

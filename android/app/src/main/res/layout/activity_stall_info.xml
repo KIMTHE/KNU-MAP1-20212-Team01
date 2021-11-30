@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/dark"
+        android:clipToOutline="true"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="161dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="17dp"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="4sp"
+            android:text="@string/stall_info_text"
+            android:textColor="@color/text_white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="91dp"
+        android:text="@string/stall_name_text"
+        android:textColor="@color/text_black"
+        android:gravity="top"/>
+
+    <TextView
+        android:id="@+id/edit_stall_name"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="34dp"
+        android:background="@drawable/border_round_stroke"
+        android:paddingHorizontal="10dp"/>
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="137dp"
+        android:gravity="top"
+        android:text="@string/stall_intro_text"
+        android:textColor="@color/text_black" />
+
+    <TextView
+        android:id="@+id/edit_stall_intro"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="131dp"
+        android:layout_marginEnd="34dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/border_round_stroke"
+        android:paddingHorizontal="10dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="176dp"
+        android:background="@drawable/border_round_stroke"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp">
+
+        <ListView
+            android:id="@+id/list_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_add_review"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/border_round_stroke"
+        android:fillViewport="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp">
+
+        <ListView
+            android:id="@+id/list_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_review"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/border_round_stroke"
+        android:gravity="center"
+        android:text="@string/add_review_text"
+        android:textAllCaps="true"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

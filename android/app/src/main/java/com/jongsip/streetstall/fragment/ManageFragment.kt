@@ -10,8 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.view.size
-import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -70,7 +68,7 @@ class ManageFragment : Fragment() {
         editStallName = rootView.findViewById(R.id.edit_stall_name)
         editStallIntro = rootView.findViewById(R.id.edit_stall_intro)
         listMenu = rootView.findViewById(R.id.list_menu)
-        relativeAddMenu = rootView.findViewById(R.id.relative_add_menu)
+        relativeAddMenu = rootView.findViewById(R.id.layout_add_menu)
         btnManageComplete = rootView.findViewById(R.id.btn_manage_complete)
 
         //해당 판매자계정의 노점 정보를 받아서 view 에 세팅

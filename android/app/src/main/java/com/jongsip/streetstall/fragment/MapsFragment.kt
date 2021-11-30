@@ -65,7 +65,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         val rootView =
             inflater.inflate(com.jongsip.streetstall.R.layout.fragment_maps, container, false)
         val mContext: Context = container!!.context
-        mView = rootView.findViewById(com.jongsip.streetstall.R.id.mapView) as MapView
+        mView = rootView.findViewById(com.jongsip.streetstall.R.id.map_view) as MapView
         cardView = rootView.findViewById(com.jongsip.streetstall.R.id.card_view) as LinearLayout
         mView.onCreate(savedInstanceState)
         mView.getMapAsync(this)
@@ -134,9 +134,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
             gMap.setOnMarkerClickListener { marker ->
                 cardView.visibility = View.VISIBLE
-                val storeName = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.store_name)
-                val introStore = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.introduce_store)
-                val bestMenu = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.best_menu)
+                val storeName = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.text_store_name)
+                val introStore = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.text_introduce_store)
+                val bestMenu = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.text_best_menu)
                 var arr = marker.tag.toString().split("/") //마커에 붙인 태그
                 storeName.text = marker.title
                 introStore.text = marker.snippet

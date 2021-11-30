@@ -32,7 +32,7 @@ class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListene
             when (it.itemId) {
                 R.id.menu_map -> replaceFragment(MapsFragment(),"map",0.0,0.0)
                 R.id.menu_search -> replaceFragment(SearchFragment(),"search",0.0,0.0)
-                R.id.menu_manage -> replaceFragment(BookmarkFragment(),"bookmark",0.0,0.0)
+                R.id.menu_bookmark -> replaceFragment(BookmarkFragment(),"bookmark",0.0,0.0)
                 else -> replaceFragment(SettingFragment(),"setting",0.0,0.0)
             }
             true

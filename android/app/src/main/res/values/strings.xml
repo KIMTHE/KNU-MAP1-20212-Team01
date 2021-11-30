@@ -7,6 +7,9 @@
     <string name="manage_text">메뉴 관리</string>
     <string name="setting_text">설정</string>
     <string name="bookmark_text">즐겨찾기</string>
+    <string name="stall_info_text">노점 정보</string>
+    <string name="add_menu_text">메뉴 등록</string>
+
     <string name="email_text">이메일</string>
     <string name="password_text">비밀번호</string>
     <string name="signIn_text">로그인</string>
@@ -14,9 +17,10 @@
     <string name="menu_text">메뉴관리</string>
     <string name="logout_text">로그아웃</string>
     <string name="leave_text">탈퇴하기</string>
+    <string name="signUp_complete_text">가입완료</string>
+
     <string name="customer_text">고객</string>
     <string name="seller_text">판매자</string>
-    <string name="signUp_complete_text">가입완료</string>
     <string name="item_stall_name_text">노점: %s</string>
     <string name="item_food_name_text">상품명: %s</string>
     <string name="item_food_price_text">가격: %d</string>
@@ -26,4 +30,18 @@
     <string name="request_food_info_text">추가정보를 입력해주세요.</string>
     <string name="request_food_price_text">가격을 입력해주세요.</string>
     <string name="complete_add_food_text">추가하기</string>
+    <string name="stall_name_text">가게이름</string>
+    <string name="stall_intro_text">한줄소개</string>
+    <string name="photo_text">사진</string>
+    <string name="food_name_text">메뉴이름</string>
+    <string name="price_text">가격</string>
+    <string name="extra_info_text">추가정보</string>
+    <string name="detail_info_text">상세정보</string>
+    <string name="before_update_text">갱신 전</string>
+    <string name="card_stall_name_text">상호명 :</string>
+    <string name="card_stall_intro_text">한줄소개 :</string>
+    <string name="card_best_menu_text">대표 메뉴 :</string>
+    <string name="no_search_result_text">검색결과가 없습니다.</string>
+    <string name="add_review_text">리뷰 추가하기</string>
+    <string name="add_review_complete_text">리뷰 추가 완료</string>
 </resources>

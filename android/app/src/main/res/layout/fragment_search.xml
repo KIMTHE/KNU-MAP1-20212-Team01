@@ -11,12 +11,12 @@
         android:background="@color/black">
 
         <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view_food"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/border_round_no_stroke"
-            android:id="@+id/search_view_food"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:iconifiedByDefault="false"
@@ -29,7 +29,7 @@
     <ListView
         android:id="@+id/list_search_food"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:divider="#999999"
         android:dividerHeight="1dp"/>
 
@@ -37,8 +37,10 @@
         android:id="@+id/text_search_no_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="검색결과가 없습니다."
+        android:text="@string/no_search_result_text"
+        android:gravity="center"
         android:textSize="20sp"
+        android:textColor="@color/text_black"
         android:visibility="invisible"/>
 
 </LinearLayout>
