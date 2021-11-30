@@ -44,4 +44,5 @@
     <string name="no_search_result_text">검색결과가 없습니다.</string>
     <string name="add_review_text">리뷰 추가하기</string>
     <string name="add_review_complete_text">리뷰 추가 완료</string>
+    <string name="stall_info">상세정보를 보실려면 클릭하세요</string>
 </resources>
