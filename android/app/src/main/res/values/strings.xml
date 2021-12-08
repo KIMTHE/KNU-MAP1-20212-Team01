@@ -42,6 +42,7 @@
     <string name="card_stall_intro_text">한줄소개 :</string>
     <string name="card_best_menu_text">대표 메뉴 :</string>
     <string name="no_search_result_text">검색결과가 없습니다.</string>
+    <string name="no_bookmark_text">북마크된 노점이 없습니다.</string>
     <string name="add_review_text">리뷰 추가하기</string>
     <string name="add_review_complete_text">리뷰 추가 완료</string>
     <string name="stall_info">상세정보를 보실려면 클릭하세요</string>

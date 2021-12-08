@@ -68,7 +68,7 @@ class SignupActivity : AppCompatActivity() {
                         fireStore.collection("user").document(uid!!).set(userModel)
 
                         if (userType == 1) //고객 일 시, bookmark 생성
-                            fireStore.collection("bookmark").document(uid).set(BookMark())
+                            fireStore.collection("bookmark").document(uid).set(BookMark(ArrayList<String>()))
                         else if (userType == 2) //노점주 일 시, stall 생성
                             fireStore.collection("stall").document(uid).set(Stall("", ""))
 

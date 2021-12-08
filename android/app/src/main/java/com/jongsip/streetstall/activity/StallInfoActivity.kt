@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.jongsip.streetstall.R
 import com.jongsip.streetstall.adapter.MenuListAdapter
+import com.jongsip.streetstall.model.BookMark
 import com.jongsip.streetstall.model.Food
 import com.jongsip.streetstall.util.FirebaseUtil
 import org.w3c.dom.Text
@@ -73,7 +74,7 @@ class StallInfoActivity: AppCompatActivity(){
                 imgBookmark.visibility = View.VISIBLE
 
                 firestore.collection("bookmark").document(uid).get().addOnSuccessListener { bmDoc->
-                    bookmarkArray = bmDoc.data!!["uidArray"] as ArrayList<String>
+                    bookmarkArray = bmDoc.data!!["uidArray"] as ArrayList<String>?
 
                     if(bookmarkArray != null && bookmarkArray!!.contains(stallUid)){
                         statusBookmark = true
@@ -100,7 +101,7 @@ class StallInfoActivity: AppCompatActivity(){
                 bookmarkArray!!.remove(stallUid)
             }
 
-            firestore.collection("bookmark").document(uid).set(bookmarkArray!!)
+            firestore.collection("bookmark").document(uid).set(BookMark(bookmarkArray!!))
         }
 
         

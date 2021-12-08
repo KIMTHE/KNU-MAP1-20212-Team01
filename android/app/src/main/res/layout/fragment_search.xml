@@ -24,8 +24,6 @@
 
     </LinearLayout>
 
-
-
     <ListView
         android:id="@+id/list_search_food"
         android:layout_width="match_parent"
@@ -33,14 +31,32 @@
         android:divider="#999999"
         android:dividerHeight="1dp"/>
 
-    <TextView
-        android:id="@+id/text_search_no_result"
+    <LinearLayout
+        android:id="@+id/layout_search_no_result"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/no_search_result_text"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="20sp"
-        android:textColor="@color/text_black"
-        android:visibility="invisible"/>
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:src="@drawable/no_results" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_search_result_text"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/text_black" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

@@ -19,7 +19,7 @@ import com.jongsip.streetstall.model.*
 
 class SettingFragment : Fragment() {
 
-    private lateinit var openClose: ToggleButton
+    private lateinit var btnOpenClose: ToggleButton
     lateinit var btnWorkingEnd: Button
     lateinit var btnLogout: Button
 
@@ -49,19 +49,28 @@ class SettingFragment : Fragment() {
         Log.d("lat", ""+lat)
         Log.d("lng", ""+lng)
 
-        openClose = rootView.findViewById(R.id.toggle_open_close)
-        //앱 껐다 켜도 서버에서 데이터 받아와서 데이터있으면 영업종료버튼이 바로 보이게 함
-        val docRef = firestore.collection("working").document(uid)
-        docRef.get().addOnSuccessListener {
-            if(it.data?.get("latitude") != null){
-                if(!openClose.isChecked){
-                    check = 1
-                    openClose.toggle()
-                    check = 0
+        btnOpenClose = rootView.findViewById(R.id.toggle_open_close)
+        btnLogout = rootView.findViewById(R.id.btn_logout)
+
+        firestore.collection("user").document(uid).get().addOnSuccessListener { userDoc ->
+            if(userDoc.data!!["userType"] == 1.toLong()) btnOpenClose.visibility = View.INVISIBLE
+
+            //앱 껐다 켜도 서버에서 데이터 받아와서 데이터있으면 영업종료버튼이 바로 보이게 함
+            else{
+                firestore.collection("working").document(uid).get().addOnSuccessListener { workDoc->
+                    if(workDoc.data!!["latitude"] != null){
+                        if(!btnOpenClose.isChecked){
+                            check = 1
+                            btnOpenClose.toggle()
+                            check = 0
+                        }
+                    }
                 }
             }
         }
-        openClose.setOnCheckedChangeListener { buttonView, isChecked ->
+
+
+        btnOpenClose.setOnCheckedChangeListener { buttonView, isChecked ->
             if(check == 0) {
                 if (isChecked) {//영업시작 버튼 눌렀을 때
                     firestore.collection("working").document(uid).set(WorkingPosition(lat, lng))
@@ -79,7 +88,7 @@ class SettingFragment : Fragment() {
             }
         }
 
-        btnLogout = rootView.findViewById(R.id.btn_logout)
+
         btnLogout.setOnClickListener {
             // 로그아웃 후, 로그인 화면으로
             val intent = Intent(activity, LoginActivity::class.java)

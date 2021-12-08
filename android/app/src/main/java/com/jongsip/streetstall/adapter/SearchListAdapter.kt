@@ -1,28 +1,21 @@
 package com.jongsip.streetstall.adapter
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.jongsip.streetstall.fragment.MapsFragment
 import com.jongsip.streetstall.model.SearchFood
-import com.jongsip.streetstall.fragment.SearchFragment
 
 import com.jongsip.streetstall.R
 import com.jongsip.streetstall.activity.NavigationActivityInterface
-import com.jongsip.streetstall.activity.SellerMainActivity
 
 
 class SearchListAdapter(
@@ -69,7 +62,7 @@ class SearchListAdapter(
             item.food.price.toString()
 
         val searchedFood: RelativeLayout =
-            view.findViewById(com.jongsip.streetstall.R.id.searched_food)
+            view.findViewById(com.jongsip.streetstall.R.id.layout_search_food)
         searchedFood.setOnClickListener {
 
             //uid 를 이용하여 가게 위도 경도 찾아서 MapsFragment 로 보내기
