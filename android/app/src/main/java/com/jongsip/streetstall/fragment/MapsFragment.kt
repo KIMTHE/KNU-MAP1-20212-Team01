@@ -138,7 +138,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             val storeUid = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.store_uid)
             gMap.setOnMarkerClickListener { marker ->
                 storeUid.visibility = View.INVISIBLE
-                cardView.visibility = View.VISIBLE
                 val storeName = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.text_store_name)
                 val introStore = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.text_introduce_store)
                 val bestMenu = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.text_best_menu)
@@ -147,6 +146,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 introStore.text = marker.snippet
                 bestMenu.text = arr[0] + "  " + arr[1] + "원"
                 storeUid.text = arr[2]
+
+                cardView.visibility = View.VISIBLE
 
                 //Log.d("parkinfo", "parkname->"+marker.title+"___pakrwhat->")
                 false
@@ -176,12 +177,22 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                mLocationManager.requestLocationUpdates(//사용자 위치 업데이트 요청
-                    LocationManager.GPS_PROVIDER,
-                    3000L,
-                    30f,
-                    mLocationListener
-                )
+                if(mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    mLocationManager.requestLocationUpdates(//gps 되면 gps로 사용자 위치 업데이트 요청
+                        LocationManager.GPS_PROVIDER,
+                        3000L,
+                        30f,
+                        mLocationListener
+                    )
+                }
+                else{
+                    mLocationManager.requestLocationUpdates(//gps 안되면 네트워크로 사용자 위치 업데이트 요청
+                        LocationManager.NETWORK_PROVIDER,
+                        3000L,
+                        30f,
+                        mLocationListener
+                    )
+                }
             }
         }
         return rootView
