@@ -87,7 +87,7 @@
         android:fillViewport="true">
 
         <ListView
-            android:id="@+id/list_menu"
+            android:id="@+id/list_manage_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="#999999"

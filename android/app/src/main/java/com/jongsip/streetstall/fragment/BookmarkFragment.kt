@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -13,6 +14,7 @@ import com.google.firebase.ktx.Firebase
 import com.jongsip.streetstall.R
 
 class BookmarkFragment : Fragment() {
+    lateinit var listBookmark: ListView
 
     lateinit var uid: String
     lateinit var auth: FirebaseAuth
@@ -33,6 +35,11 @@ class BookmarkFragment : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_bookmark, container, false)
 
+        listBookmark = rootView.findViewById(R.id.list_bookmark)
+
+        firestore.collection("bookmark").document(uid).get().addOnSuccessListener {
+
+        }
 
         return rootView
     }

@@ -22,7 +22,6 @@ import com.jongsip.streetstall.adapter.MenuListAdapter
 import com.jongsip.streetstall.model.Food
 import com.jongsip.streetstall.model.Stall
 import com.jongsip.streetstall.util.FirebaseUtil
-import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -30,7 +29,7 @@ import kotlin.collections.ArrayList
 class ManageFragment : Fragment() {
     lateinit var editStallName: EditText
     private lateinit var editStallIntro: EditText
-    lateinit var listMenu: ListView
+    lateinit var listManageMenu: ListView
     lateinit var relativeAddMenu: RelativeLayout
     lateinit var btnManageComplete: Button
 
@@ -67,7 +66,7 @@ class ManageFragment : Fragment() {
 
         editStallName = rootView.findViewById(R.id.edit_stall_name)
         editStallIntro = rootView.findViewById(R.id.edit_stall_intro)
-        listMenu = rootView.findViewById(R.id.list_menu)
+        listManageMenu = rootView.findViewById(R.id.list_manage_menu)
         relativeAddMenu = rootView.findViewById(R.id.layout_add_menu)
         btnManageComplete = rootView.findViewById(R.id.btn_manage_complete)
 
@@ -81,7 +80,7 @@ class ManageFragment : Fragment() {
                 foodMenu =
                     FirebaseUtil.convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
                 adapter = MenuListAdapter(mActivity, foodMenu, uid)
-                listMenu.adapter = adapter
+                listManageMenu.adapter = adapter
             }
         }
 

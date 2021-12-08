@@ -31,6 +31,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.util.HashMap
 import android.content.Intent
+import com.jongsip.streetstall.R
 import com.jongsip.streetstall.activity.StallInfoActivity
 
 
@@ -49,11 +50,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     lateinit var firestore: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
     private lateinit var storageRef: StorageReference
-    var uid: String = "None"
+    lateinit var uid: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
+        uid = arguments?.getString("uid")!!
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
         storageRef = storage.reference
@@ -80,7 +82,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 if (document.data["latitude"] != null) {
                     lat = document.data["latitude"].toString().toDouble()
                     lng = document.data["longitude"].toString().toDouble()
-                    uid = document.id
+                    val stallUid = document.id
                     val currentLocation = LatLng(lat, lng)//위도 경도 값 저장
                     var foodName : String? = null
                     var foodPrice : String? = null
@@ -105,7 +107,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                             }
                         }
                         if (marker != null) {
-                            marker.tag = "$foodName/$foodPrice/$uid"
+                            marker.tag = "$foodName/$foodPrice/$stallUid"
                         }
                     }
                 }
@@ -135,13 +137,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             //DB 저장을 위해 SellerMainActivity 에 위도 경도 값 전달
             dataPassListener.onDataPass(lat, lng)
 
-            val storeUid = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.store_uid)
+            val storeUid = rootView.findViewById<TextView>(R.id.store_uid)
             gMap.setOnMarkerClickListener { marker ->
                 storeUid.visibility = View.INVISIBLE
                 cardView.visibility = View.VISIBLE
-                val storeName = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.text_store_name)
-                val introStore = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.text_introduce_store)
-                val bestMenu = rootView.findViewById<TextView>(com.jongsip.streetstall.R.id.text_best_menu)
+                val storeName = rootView.findViewById<TextView>(R.id.text_store_name)
+                val introStore = rootView.findViewById<TextView>(R.id.text_introduce_store)
+                val bestMenu = rootView.findViewById<TextView>(R.id.text_best_menu)
                 var arr = marker.tag.toString().split("/") //마커에 붙인 태그
                 storeName.text = marker.title
                 introStore.text = marker.snippet
@@ -155,12 +157,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             //맵 클릭 리스너-맵 클릭하면 카드뷰 없어짐
             gMap.setOnMapClickListener { cardView.visibility = View.GONE }
 
-            //카드뷰 클릭시 StallInfoActivity로 화면 전환
+            //카드뷰 클릭시 StallInfoActivity 로 화면 전환
             cardView.setOnClickListener {
-                //노점 메뉴 리스트 출력을 위해 StallInfoActivity에 uid 값 전달
-                uid = storeUid.text.toString()
+                //노점 메뉴 리스트 출력을 위해 StallInfoActivity 에 uid 값 전달
+                val stallUid = storeUid.text.toString()
                 val intent = Intent(activity, StallInfoActivity::class.java)
-                intent.putExtra("stallUid", uid)
+                intent.putExtra("stallUid", stallUid)
+                intent.putExtra("uid",uid)
                 requireActivity().startActivity(intent)
             }
         }
