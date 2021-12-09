@@ -67,10 +67,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         // Inflate the layout for this fragment
         val rootView =
-            inflater.inflate(com.jongsip.streetstall.R.layout.fragment_maps, container, false)
+            inflater.inflate(R.layout.fragment_maps, container, false)
         val mContext: Context = container!!.context
-        mView = rootView.findViewById(com.jongsip.streetstall.R.id.map_view) as MapView
-        cardView = rootView.findViewById(com.jongsip.streetstall.R.id.card_view) as LinearLayout
+        mView = rootView.findViewById(R.id.map_view) as MapView
+        cardView = rootView.findViewById(R.id.card_view) as LinearLayout
         mView.onCreate(savedInstanceState)
         mView.getMapAsync(this)
 
