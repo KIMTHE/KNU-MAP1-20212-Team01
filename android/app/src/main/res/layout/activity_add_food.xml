@@ -26,6 +26,7 @@
             android:lineSpacingExtra="4sp"
             android:text="@string/add_menu_text"
             android:textColor="#FEFEFE"
+            android:textStyle="bold"
             android:textSize="20sp" />
     </RelativeLayout>
 

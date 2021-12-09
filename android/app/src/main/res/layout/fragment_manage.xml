@@ -17,6 +17,7 @@
         android:elevation="4dp">
 
         <TextView
+            android:textStyle="bold"
             android:layout_width="161dp"
             android:layout_height="25dp"
             android:layout_alignParentStart="true"
