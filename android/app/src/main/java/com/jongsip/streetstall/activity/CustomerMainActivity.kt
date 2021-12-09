@@ -52,9 +52,10 @@ class CustomerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListene
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_frame_customer, (fragmentClass),tag)
             .addToBackStack(tag).commit()
+        updateBottomMenu()
     }
 
-    //MapsFragment에서 위도 경도 정보 받음
+    //MapsFragment 에서 위도 경도 정보 받음
     override fun onDataPass(latitude : Double,longitude : Double) {
        // lat = latitude
        // lng = longitude

@@ -29,7 +29,7 @@ import kotlin.collections.ArrayList
 class ManageFragment : Fragment() {
     lateinit var editStallName: EditText
     private lateinit var editStallIntro: EditText
-    lateinit var listManageMenu: ListView
+    private lateinit var listManageMenu: ListView
     lateinit var relativeAddMenu: RelativeLayout
     lateinit var btnManageComplete: Button
 
@@ -79,8 +79,7 @@ class ManageFragment : Fragment() {
             if (it.data!!["foodMenu"] != null && mActivity != null) {
                 foodMenu =
                     FirebaseUtil.convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
-                adapter = MenuListAdapter(mActivity, foodMenu, uid)
-                listManageMenu.adapter = adapter
+                listManageMenu.adapter = MenuListAdapter(requireActivity().applicationContext, foodMenu, uid)
             }
         }
 

@@ -1,5 +1,6 @@
 package com.jongsip.streetstall.activity
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -60,10 +61,10 @@ class StallInfoActivity: AppCompatActivity(){
             textStallName.text =  it.data!!["name"].toString()
             textStallIntro.text =  it.data!!["brief"].toString()
 
-            if (it.data!!["foodMenu"] != null) {
+            if (it.data!!["foodMenu"] != null ) {
                 foodMenu =
                     FirebaseUtil.convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
-                adapter = MenuListAdapter(this, foodMenu, stallUid)
+                adapter = MenuListAdapter(applicationContext, foodMenu, stallUid)
                 listMenu.adapter = adapter
             }
         }
@@ -104,7 +105,6 @@ class StallInfoActivity: AppCompatActivity(){
             firestore.collection("bookmark").document(uid).set(BookMark(bookmarkArray!!))
         }
 
-        
-
     }
+
 }

@@ -57,6 +57,8 @@ class SellerMainActivity : AppCompatActivity(), MapsFragment.OnDataPassListener,
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_frame_seller, (fragmentClass),tag)
             .addToBackStack(tag).commit()
+
+        updateBottomMenu()
     }
 
     //MapsFragment 에서 위도 경도 정보 받음

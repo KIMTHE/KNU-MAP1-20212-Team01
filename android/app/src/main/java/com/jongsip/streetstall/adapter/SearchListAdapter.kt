@@ -1,6 +1,7 @@
 package com.jongsip.streetstall.adapter
 
 import android.app.Activity
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ import com.jongsip.streetstall.activity.NavigationActivityInterface
 
 
 class SearchListAdapter(
-    val context: Activity?,
+    val context: Context,
     val activity: NavigationActivityInterface,
     private val data: ArrayList<SearchFood>
 ) : BaseAdapter() {
@@ -44,7 +45,7 @@ class SearchListAdapter(
             .inflate(R.layout.item_search_food, parent, false)
         val item = data[position]
 
-        if (item.food.imgRef != null && context != null) {
+        if (item.food.imgRef != null) {
             storageRef.child("${item.uid}/" + item.food.imgRef).downloadUrl.addOnCompleteListener {
                 //Glide 라이브러리를 이용하여 이미지뷰에 uri 를 띄움
                 Glide.with(context).load(it.result)
@@ -53,25 +54,22 @@ class SearchListAdapter(
         }
 
         view.findViewById<TextView>(R.id.text_search_stall_name).text =
-            item.stallName.toString()
+            item.stallName
         view.findViewById<TextView>(R.id.text_search_food_name).text =
-            item.food.name.toString()
+            item.food.name
         view.findViewById<TextView>(R.id.text_search_food_info).text =
             item.food.extraInfo
         view.findViewById<TextView>(R.id.text_search_food_price).text =
             item.food.price.toString()
 
-        val searchedFood: RelativeLayout =
-            view.findViewById(com.jongsip.streetstall.R.id.layout_search_food)
-        searchedFood.setOnClickListener {
+        val searchedFood: RelativeLayout = view.findViewById(R.id.layout_search_food)
 
+        searchedFood.setOnClickListener {
             //uid 를 이용하여 가게 위도 경도 찾아서 MapsFragment 로 보내기
             val docRef = firestore.collection("working").document(item.uid)
-            var lat: Double = 0.0
-            var lng: Double = 0.0
             docRef.get().addOnSuccessListener {
-                lat = it.data?.get("latitude").toString().toDouble()
-                lng = it.data?.get("longitude").toString().toDouble()
+                val lat = it.data?.get("latitude").toString().toDouble()
+                val lng = it.data?.get("longitude").toString().toDouble()
                 activity.replaceFragment(MapsFragment(), "map", lat, lng)
             }
         }

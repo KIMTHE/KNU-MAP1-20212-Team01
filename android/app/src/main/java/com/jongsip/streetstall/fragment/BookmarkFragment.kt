@@ -46,10 +46,12 @@ class BookmarkFragment : Fragment() {
 
         fireStore.collection("bookmark").document(uid).get().addOnSuccessListener {
             val bookmarkList = it.data!!["uidArray"] as ArrayList<String>
-            listBookmark.adapter = BookmarkListAdapter(mActivity,
-                bookmarkList,uid)
 
-            if(bookmarkList.size != 0) layoutNoBookmark.visibility = View.INVISIBLE
+            if (mActivity != null)
+                listBookmark.adapter =
+                    BookmarkListAdapter(mActivity!!.applicationContext, bookmarkList, uid)
+
+            if (bookmarkList.size != 0) layoutNoBookmark.visibility = View.INVISIBLE
         }
 
         return rootView

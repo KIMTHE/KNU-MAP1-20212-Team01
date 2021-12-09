@@ -1,6 +1,7 @@
 package com.jongsip.streetstall.adapter
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,7 @@ import com.jongsip.streetstall.R
 import com.jongsip.streetstall.activity.StallInfoActivity
 
 class BookmarkListAdapter(
-    val context: Activity?,
+    val context: Context,
     private val data: ArrayList<String>,
     private val uid: String
 ) : BaseAdapter() {
@@ -53,7 +54,7 @@ class BookmarkListAdapter(
                 val intent = Intent(context, StallInfoActivity::class.java)
                 intent.putExtra("stallUid", item)
                 intent.putExtra("uid",uid)
-                context!!.startActivity(intent)
+                context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             }
 
         }

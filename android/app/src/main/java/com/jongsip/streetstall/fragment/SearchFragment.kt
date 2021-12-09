@@ -101,9 +101,9 @@ class SearchFragment : Fragment() {
                 }
 
                 if(searchData.size == 0) layoutSearchNoResult.visibility = View.VISIBLE
-                else{
+                else if (mActivity != null){
                     listSearchFood.adapter = SearchListAdapter(
-                        mActivity,
+                        requireActivity().applicationContext,
                         mActivity as NavigationActivityInterface, searchData
                     )
                     layoutSearchNoResult.visibility = View.INVISIBLE
