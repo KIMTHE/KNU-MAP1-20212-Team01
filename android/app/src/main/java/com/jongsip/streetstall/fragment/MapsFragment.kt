@@ -182,22 +182,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                if(mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    mLocationManager.requestLocationUpdates(//gps 되면 gps로 사용자 위치 업데이트 요청
-                        LocationManager.GPS_PROVIDER,
-                        3000L,
-                        30f,
-                        mLocationListener
-                    )
-                }
-                else{
-                    mLocationManager.requestLocationUpdates(//gps 안되면 네트워크로 사용자 위치 업데이트 요청
-                        LocationManager.NETWORK_PROVIDER,
-                        3000L,
-                        30f,
-                        mLocationListener
-                    )
-                }
+
+                mLocationManager.requestLocationUpdates(//gps 안되면 네트워크로 사용자 위치 업데이트 요청
+                    LocationManager.NETWORK_PROVIDER,
+                    3000L,
+                    30f,
+                    mLocationListener
+                )
             }
         }
         return rootView
