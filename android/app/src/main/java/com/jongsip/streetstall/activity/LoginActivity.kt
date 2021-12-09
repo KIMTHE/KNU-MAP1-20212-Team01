@@ -1,4 +1,4 @@
-package com.jongsip.streetstall.login
+package com.jongsip.streetstall.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,8 +12,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.jongsip.streetstall.R
-import com.jongsip.streetstall.activity.CustomerMainActivity
-import com.jongsip.streetstall.activity.SellerMainActivity
 
 class LoginActivity : AppCompatActivity() {
     lateinit var btnLogin: Button

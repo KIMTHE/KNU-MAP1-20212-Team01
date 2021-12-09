@@ -1,4 +1,4 @@
-package com.jongsip.streetstall.login
+package com.jongsip.streetstall.activity
 
 import android.os.Bundle
 import android.widget.Button

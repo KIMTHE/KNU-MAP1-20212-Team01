@@ -14,7 +14,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.jongsip.streetstall.R
-import com.jongsip.streetstall.login.LoginActivity
+import com.jongsip.streetstall.activity.LoginActivity
 import com.jongsip.streetstall.model.*
 
 class SettingFragment : Fragment() {

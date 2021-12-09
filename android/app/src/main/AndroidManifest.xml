@@ -26,9 +26,9 @@
 
         <activity android:name=".activity.SellerMainActivity"/>
         <activity android:name=".activity.CustomerMainActivity"/>
-        <activity android:name=".login.SignupActivity"/>
+        <activity android:name=".activity.SignupActivity"/>
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
