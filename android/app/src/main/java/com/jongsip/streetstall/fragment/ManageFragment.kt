@@ -79,7 +79,8 @@ class ManageFragment : Fragment() {
             if (it.data!!["foodMenu"] != null && mActivity != null) {
                 foodMenu =
                     FirebaseUtil.convertToFood(it.data!!["foodMenu"] as ArrayList<HashMap<String, *>>)
-                listManageMenu.adapter = MenuListAdapter(requireActivity().applicationContext, foodMenu, uid)
+                adapter = MenuListAdapter(requireActivity().applicationContext, foodMenu, uid)
+                listManageMenu.adapter = adapter
             }
         }
 
